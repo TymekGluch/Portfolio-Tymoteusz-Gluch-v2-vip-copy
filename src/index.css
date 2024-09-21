@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --background: 255, 255, 255;
+        --text: 12, 10, 29;
+        --accent-orange: 12, 10, 29;
+        --accent-green: 12, 10, 29;
+        --accent-blue: 12, 10, 29;
+    }
+
+    .dark {
+        --background: 12, 10, 29;
+        --text: 181, 181, 239;
+        --accent-orange: 255, 138, 28;
+        --accent-green: 109, 255, 28;
+        --accent-blue: 28, 255, 219;
+    }
+}    
+  

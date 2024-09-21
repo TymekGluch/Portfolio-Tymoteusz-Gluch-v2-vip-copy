@@ -1,0 +1,13 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  min-height: 100dvh;
+  overflow-x: clip;
+  font-family: "Source Code Pro", monospace;
+
+}
