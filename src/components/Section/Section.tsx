@@ -4,12 +4,10 @@ import {
   SECTION_COLOR_VARIANT,
   SECTION_COMPONENT,
   SECTION_HEADING_TAG,
-  SECTION_SHADOW_SIZE,
 } from "./Section.constants";
 import classNames from "classnames";
 import {
   getBagroundVariant,
-  getInsetShadowVariant,
   getShadowVariant,
   getTextColorVariant,
 } from "./Section.utilities";
@@ -65,7 +63,7 @@ const Section: React.FC<
         className={classNames(
           "absolute right-0 top-0 hidden lg:flex flex-col justify-between items-center w-[12.5%] h-full translate-x-[calc(100%_+_1px+1rem)] "
         )}>
-        {sectionIcon}
+        <div className="w-12 h-12">{sectionIcon}</div>
         <span
           className={classNames(
             "block w-px h-[calc(100%_-_4rem)] mt-2",
