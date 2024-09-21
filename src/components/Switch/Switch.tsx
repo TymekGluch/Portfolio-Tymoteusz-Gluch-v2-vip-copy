@@ -35,7 +35,7 @@ const Switch = ({
 }: SwitchProps) => {
   const iconWrapperClass = twMerge(
     TEXT_COLORS_CLASSES?.[colorVariant],
-    "flex items-center justify-center w-12 h-12"
+    "flex items-center justify-center w-12 h-12 p-1"
   );
 
   const resolvedIdleText = idleText?.toUpperCase();
