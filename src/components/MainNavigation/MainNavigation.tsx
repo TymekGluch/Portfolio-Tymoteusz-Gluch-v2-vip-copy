@@ -14,7 +14,7 @@ const MainNavigation = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState<boolean>(false);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const isThemeParamExist = Boolean(searchParams.get("theme"));
+  const isThemeParamExist = Boolean(localStorage.getItem("theme"));
   const menuButtonDescription = isMenuOpen ? "close menu" : "open menu";
 
   const handleMenu = () => {
@@ -40,7 +40,7 @@ const MainNavigation = () => {
       return;
     }
 
-    searchParams.delete("theme");
+    searchParams.set("theme", "dark");
 
     setSearchParams(searchParams);
 
