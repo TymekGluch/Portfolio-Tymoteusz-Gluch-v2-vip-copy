@@ -1,20 +1,17 @@
 import React from "react";
 import { ValueOf } from "../../types/utiles";
-import {
-  SECTION_COLOR_VARIANT,
-  SECTION_COMPONENT,
-  SECTION_HEADING_TAG,
-} from "./Section.constants";
+import { SECTION_COMPONENT, SECTION_HEADING_TAG } from "./Section.constants";
 import classNames from "classnames";
 import {
-  getBagroundVariant,
-  getShadowVariant,
-  getTextColorVariant,
-} from "./Section.utilities";
+  BG_COLORS_CLASSES,
+  COLOR_VARIANT,
+  SHADOW_COLORS_CLASSES,
+  TEXT_COLORS_CLASSES,
+} from "../../constants";
 
 type SectionProps = React.PropsWithChildren<{
   sectionIcon: React.ReactNode;
-  colorVariant?: ValueOf<typeof SECTION_COLOR_VARIANT>;
+  colorVariant?: ValueOf<typeof COLOR_VARIANT>;
   sectionComponent?: ValueOf<typeof SECTION_COMPONENT>;
   headingTag?: ValueOf<typeof SECTION_HEADING_TAG>;
   heading?: string;
@@ -25,7 +22,7 @@ const Section: React.FC<
 > = ({
   children,
   sectionIcon,
-  colorVariant = SECTION_COLOR_VARIANT.DEFAULT,
+  colorVariant = COLOR_VARIANT.DEFAULT,
   headingTag = SECTION_HEADING_TAG.H2,
   heading,
   sectionComponent = SECTION_COMPONENT.SECTION,
@@ -38,22 +35,22 @@ const Section: React.FC<
     <Component
       className={classNames(
         "relative flex flex-col justify-between items-center gap-6 w-[calc(100%_+_3rem)] min-h-32 p-6 py-0 scroll-m-20 first-of-type:scroll-m-28",
-        getTextColorVariant(colorVariant)
+        TEXT_COLORS_CLASSES?.[colorVariant]
       )}
       {...restProps}>
       {!!heading && (
         <HeadingTag
           className={classNames(
             "flex flex-col justify-center items-center gap-2 w-full text-2xl uppercase ",
-            getTextColorVariant(colorVariant)
+            TEXT_COLORS_CLASSES?.[colorVariant]
           )}>
           {heading}
 
           <span
             className={classNames(
               "w-full h-px",
-              getBagroundVariant(colorVariant),
-              getShadowVariant(colorVariant)
+              BG_COLORS_CLASSES?.[colorVariant],
+              SHADOW_COLORS_CLASSES?.[colorVariant]
             )}
           />
         </HeadingTag>
@@ -67,15 +64,15 @@ const Section: React.FC<
         <span
           className={classNames(
             "block w-px h-[calc(100%_-_4rem)] mt-2",
-            getShadowVariant(colorVariant),
-            getBagroundVariant(colorVariant)
+            SHADOW_COLORS_CLASSES?.[colorVariant],
+            BG_COLORS_CLASSES?.[colorVariant]
           )}
         />
         <span
           className={classNames(
             "block w-4 h-4 rounded-full",
-            getBagroundVariant(colorVariant),
-            getShadowVariant(colorVariant)
+            BG_COLORS_CLASSES?.[colorVariant],
+            SHADOW_COLORS_CLASSES?.[colorVariant]
           )}
         />
       </div>

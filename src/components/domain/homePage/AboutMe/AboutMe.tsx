@@ -10,7 +10,7 @@ const AboutMe: React.FC = () => {
     useFetchAboutMeData();
 
   return (
-    <div className="flex flex-wrap sm:flex-nowrap justify-evenly items-center gap-6 max-w-full overflow-clip">
+    <div className="relative flex flex-wrap sm:flex-nowrap justify-evenly items-center gap-6 max-w-full overflow-clip">
       {isError || isLoading ? (
         <>
           <ContentProgress
