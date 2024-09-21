@@ -1,9 +1,8 @@
 import React from "react";
 import { ValueOf } from "../../types/utiles";
 import { PROGRESS_STATUS, PROGRESS_VARIANT } from "./Progress.constants";
-import { COLOR_VARIANT } from "../../constants";
+import { BG_COLORS_CLASSES, COLOR_VARIANT } from "../../constants";
 import classNames from "classnames";
-import { getBagroundVariant } from "../../utilities";
 
 type ProgressProps = {
   status?: ValueOf<typeof PROGRESS_STATUS>;
@@ -18,7 +17,6 @@ type ClassAtributeType = {
 type ContentProgressProps = Omit<ProgressProps, "variant"> & ClassAtributeType;
 
 const Progress: React.FC<ProgressProps> = ({
-  status = PROGRESS_STATUS.LOADING,
   color = COLOR_VARIANT.DEFAULT,
   variant,
 }) => {
@@ -27,11 +25,11 @@ const Progress: React.FC<ProgressProps> = ({
       <div
         className={classNames(
           "relative w-full h-1 bg-opacity-50 overflow-clip",
-          getBagroundVariant(color)
+          BG_COLORS_CLASSES?.[color]
         )}>
         <div
           className={classNames(
-            getBagroundVariant(color),
+            BG_COLORS_CLASSES?.[color],
             "absolute w-1/2 h-1 animate-linearProgress"
           )}
         />
@@ -46,7 +44,9 @@ const ContentProgress: React.FC<ContentProgressProps> = ({
   sizeClass,
 }) => {
   const background =
-    status === PROGRESS_STATUS.ERROR ? "bg-red-500" : getBagroundVariant(color);
+    status === PROGRESS_STATUS.ERROR
+      ? "bg-red-500"
+      : BG_COLORS_CLASSES?.[color];
 
   return (
     <div

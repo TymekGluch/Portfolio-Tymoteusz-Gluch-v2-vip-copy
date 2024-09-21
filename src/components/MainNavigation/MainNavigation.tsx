@@ -5,10 +5,16 @@ import {
   onlyMobileLinks,
 } from "./MainNavigation.data";
 import classNames from "classnames";
+import { Switch } from "../Switch";
+import MoonIcon from "../../assets/icons/moon.svg?react";
+import SunIcon from "../../assets/icons/sun.svg?react";
+import { useSearchParams } from "react-router-dom";
 
 const MainNavigation = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState<boolean>(false);
+  const [searchParams, setSearchParams] = useSearchParams();
 
+  const isThemeParamExist = Boolean(searchParams.get("theme"));
   const menuButtonDescription = isMenuOpen ? "close menu" : "open menu";
 
   const handleMenu = () => {
@@ -19,6 +25,26 @@ const MainNavigation = () => {
     }
 
     setIsMenuOpen((prev) => !prev);
+  };
+
+  const handleThemeChange = () => {
+    const theme: string | null = localStorage.getItem("theme");
+
+    if (theme !== "light") {
+      searchParams.set("theme", "light");
+
+      setSearchParams(searchParams);
+
+      localStorage.setItem("theme", "light");
+
+      return;
+    }
+
+    searchParams.delete("theme");
+
+    setSearchParams(searchParams);
+
+    localStorage.removeItem("theme");
   };
 
   return (
@@ -94,6 +120,18 @@ const MainNavigation = () => {
                 )}
               </li>
             ))}
+
+            <li>
+              <Switch
+                idleIcon={<MoonIcon />}
+                triggeredIcon={<SunIcon />}
+                idleText="dark"
+                triggeredText="light"
+                className="mt-3 lg:m-0"
+                onChange={handleThemeChange}
+                defaultChecked={isThemeParamExist}
+              />
+            </li>
           </ul>
         </div>
       </div>

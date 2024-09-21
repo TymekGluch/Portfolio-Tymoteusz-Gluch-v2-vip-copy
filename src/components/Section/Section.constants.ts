@@ -12,15 +12,8 @@ const SECTION_HEADING_TAG = {
     H5: 'h5',
 } as const;
 
-const SECTION_COLOR_VARIANT = {
-    DEFAULT: 'default',
-    PRIMARY: 'primary',
-    SECONDARY: 'secondary',
-    TERTIARY: 'tertiary',
-} as const;
-
 const SECTION_SHADOW_SIZE = {
     MD: 'md',
 } as const;
 
-export { SECTION_COMPONENT, SECTION_HEADING_TAG, SECTION_COLOR_VARIANT, SECTION_SHADOW_SIZE }
+export { SECTION_COMPONENT, SECTION_HEADING_TAG, SECTION_SHADOW_SIZE }

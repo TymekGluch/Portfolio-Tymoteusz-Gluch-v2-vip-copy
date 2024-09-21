@@ -1,10 +1,27 @@
 import React from "react";
 import { MainNavigation } from "../MainNavigation";
 import { SideNavigation } from "../SideNavigation";
+import { useSearchParams } from "react-router-dom";
 
 type LayoutProps = React.PropsWithChildren;
 
 const Layout = ({ children }: LayoutProps) => {
+  const [searchParams] = useSearchParams();
+
+  const themeQueryParam = searchParams.get("theme");
+
+  React.useLayoutEffect(() => {
+    if (
+      localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [themeQueryParam]);
+
   return (
     <main className="flex justify-center align-middle w-screen min-h-screen lg:px-4">
       <div className="flex flex-col justify-end lg:justify-between align-middle gap-4 w-full max-w-screen-2xl min-h-screen border-solid border-px border-textColor-primary">
