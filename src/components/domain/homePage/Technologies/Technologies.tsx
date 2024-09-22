@@ -71,7 +71,7 @@ const Technologies: React.FC<TechnologiesProps> = ({
     <Component
       id={id}
       className={classNames(
-        "flex justify-center items-center flex-wrap gap-8 w-full h-fit p-6 border-solid border border-accentColor-primary rounded-2xl",
+        "flex justify-center items-center flex-wrap gap-8 w-full h-fit p-6 border-solid border border-accentColor-secondary rounded-2xl",
         variant === TECHNOLOGIES_VARIANT.MOBILE_SECTION &&
           "lg:hidden shadow-none scroll-m-28",
         isLoading && "animate-pulse"
@@ -102,7 +102,7 @@ const Technologies: React.FC<TechnologiesProps> = ({
                   />
                 ) : (
                   <ContentProgress
-                    color={COLOR_VARIANT.PRIMARY}
+                    color={COLOR_VARIANT.SECONDARY}
                     status={PROGRESS_STATUS.LOADING}
                     sizeClass="w-12 h-12 rounded-sm"
                   />
