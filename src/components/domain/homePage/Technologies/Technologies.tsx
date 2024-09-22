@@ -86,7 +86,7 @@ const Technologies: React.FC<TechnologiesProps> = ({
           {data?.fields?.heading ?? "loading..."}
 
           {variant === TECHNOLOGIES_VARIANT.MOBILE_SECTION && (
-            <span className="block w-full h-px bg-accentColor-primary " />
+            <span className="block w-full h-px bg-accentColor-secondary" />
           )}
         </HeadingTag>
       )}
