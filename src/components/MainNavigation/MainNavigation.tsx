@@ -9,10 +9,24 @@ import { Switch } from "../Switch";
 import MoonIcon from "../../assets/icons/moon.svg?react";
 import SunIcon from "../../assets/icons/sun.svg?react";
 import { useSearchParams } from "react-router-dom";
+import { Link } from "../Link";
+import { COLOR_VARIANT } from "../../constants";
+import { useHandleOutsideClick } from "../../hooks";
 
 const MainNavigation = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState<boolean>(false);
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const listRef = React.useRef<HTMLUListElement | null>(null);
+  const buttonRef = React.useRef<HTMLButtonElement | null>(null);
+
+  useHandleOutsideClick([listRef, buttonRef], () => {
+    if (isMenuOpen) {
+      setIsMenuOpen(false);
+
+      document.documentElement.classList.remove("overflow-y-clip");
+    }
+  });
 
   const isThemeParamExist = Boolean(localStorage.getItem("theme"));
   const menuButtonDescription = isMenuOpen ? "close menu" : "open menu";
@@ -55,12 +69,13 @@ const MainNavigation = () => {
           className="flex justify-center items-center size-12"
           title="Go home"
           aria-label="Go home">
-          <h1 className="text-2xl font-bold text-accentColor-primary">
+          <h1 className="text-2xl font-bold text-accentColor-secondary">
             T<span className="text-xl text-accentColor-tertiary">G</span>
           </h1>
         </a>
 
         <button
+          ref={buttonRef}
           type="button"
           className={classNames(
             "flex lg:hidden justify-center items-center size-12"
@@ -73,7 +88,7 @@ const MainNavigation = () => {
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               fill="currentColor"
-              className="w-8 h-8 fill-accentColor-secondary">
+              className="w-8 h-8 fill-accentColor-primary">
               <path
                 fillRule="evenodd"
                 d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z"
@@ -99,27 +114,39 @@ const MainNavigation = () => {
             isMenuOpen ? "flex" : "hidden",
             "fixed lg:static left-1/2 bottom-0 lg:flex justify-center items-start lg:items-center w-screen lg:w-fit h-[calc(100dvh_-_4rem)] lg:h-fit bg-backgroundColor-primary lg:bg-transparent bg-opacity-80 lg:bg-opacity-100 transform -translate-x-1/2 lg:transform-none"
           )}>
-          <ul className="flex flex-col lg:flex-row justify-center items-center gap-4 lg:gap-10 w-fit p-10 lg:p-0 mt-[15vh] lg:m-0 bg-backgroundColor-primary lg:bg-transparent border-solid border border-accentColor-primary lg:border-none rounded-lg lg:rounded-none shadow-variant-2-md-inner lg:shadow-none">
-            {navigationLinks.map((current, index, array) => (
-              <li
-                key={current.name}
-                className={classNames(
-                  "flex flex-col lg:flex-row gap-4 w-full last-of-type:text-accentColor-secondary uppercase",
-                  current.deviceVisibility === ITEM_VISIBILITY_DEVICE.MOBILE &&
-                    "lg:hidden",
-                  !onlyMobileLinks
-                    .map(({ name }) => name)
-                    .includes(current.name) && "lg:hidden"
-                )}>
-                <a href={current.anchor} className="whitespace-nowrap">
-                  {current.name}
-                </a>
+          <ul
+            ref={listRef}
+            className="flex flex-col lg:flex-row justify-center items-center gap-4 lg:gap-10 w-fit p-10 lg:p-0 mt-[15vh] lg:m-0 bg-backgroundColor-primary lg:bg-transparent border-solid border border-accentColor-secondary lg:border-none rounded-lg lg:rounded-none shadow-variant-3-md-inner lg:shadow-none">
+            {navigationLinks.map((current, index, array) => {
+              const isLastItem = index === array.length - 1;
 
-                {index < array.length - 1 && (
-                  <span className="block lg:hidden w-full h-px bg-accentColor-primary shadow-variant-2-md" />
-                )}
-              </li>
-            ))}
+              return (
+                <li
+                  key={current.name}
+                  className={classNames(
+                    "flex flex-col lg:flex-row gap-4 w-full",
+                    current.deviceVisibility ===
+                      ITEM_VISIBILITY_DEVICE.MOBILE && "lg:hidden",
+                    !onlyMobileLinks
+                      .map(({ name }) => name)
+                      .includes(current.name) && "lg:hidden"
+                  )}>
+                  <Link.anchor
+                    href={current.anchor}
+                    onClick={handleMenu}
+                    uppercase
+                    colorVariant={
+                      isLastItem ? COLOR_VARIANT.PRIMARY : COLOR_VARIANT.DEFAULT
+                    }>
+                    {current.name}
+                  </Link.anchor>
+
+                  {isLastItem && (
+                    <span className="block lg:hidden w-full h-px bg-accentColor-secondary shadow-variant-3-md" />
+                  )}
+                </li>
+              );
+            })}
 
             <li>
               <Switch

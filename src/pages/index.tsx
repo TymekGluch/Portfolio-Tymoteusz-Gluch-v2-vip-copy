@@ -46,7 +46,7 @@ const HomePage: React.FC = () => {
         id="my-project"
         heading="My porject"
         sectionIcon={<PaintBrushIcon />}
-        colorVariant={COLOR_VARIANT.PRIMARY}
+        colorVariant={COLOR_VARIANT.SECONDARY}
         sectionComponent={SECTION_COMPONENT.SECTION}
       />
 

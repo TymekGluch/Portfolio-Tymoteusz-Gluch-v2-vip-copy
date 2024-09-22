@@ -1,1 +1,1 @@
-export * from './useOnClickOutsideEffect';
+export * from './useHandleOutsideClick';

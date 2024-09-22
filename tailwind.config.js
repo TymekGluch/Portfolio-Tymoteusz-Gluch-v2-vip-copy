@@ -8,8 +8,8 @@ const generateColorClass = (variable) => {
 }
 
 const accentColor = {
-  primary: generateColorClass('accent-orange'),
-  secondary: generateColorClass('accent-green'),
+  primary: generateColorClass('accent-green'),
+  secondary: generateColorClass('accent-orange'),
   tertiary: generateColorClass('accent-blue'),
 };
 
@@ -59,11 +59,11 @@ export default {
         'md': '0 0 25px 1px rgb(var(--text))',
         'md-inner': 'inset 0 0 25px 1px rgb(var(--text))',
 
-        'variant-2-md': '0 0 25px 1px rgb(var(--accent-orange))',
-        'variant-2-md-inner': 'inset 0 0 25px 1px rgb(var(--accent-orange))',
+        'variant-2-md': '0 0 25px 1px rgb(var(--accent-green))',
+        'variant-2-md-inner': 'inset 0 0 25px 1px rgb(var(--accent-green))',
 
-        'variant-3-md': '0 0 25px 1px rgb(var(--accent-green))',
-        'variant-3-md-inner': 'inset 0 0 25px 1px rgb(var(--accent-green))',
+        'variant-3-md': '0 0 25px 1px rgb(var(--accent-orange))',
+        'variant-3-md-inner': 'inset 0 0 25px 1px rgb(var(--accent-orange))',
 
         'variant-4-md': '0 0 25px 1px rgb(var(--accent-blue))',
         'variant-4-md-inner': 'inset 0 0 25px 1px rgb(var(--accent-blue))',

@@ -5,6 +5,9 @@ import {
   TECHNOLOGIES_HEADING,
   TECHNOLOGIES_VARIANT,
 } from "../domain/homePage/Technologies/Technologies.constants";
+import { Link } from "../Link";
+import { LINK_VARIANT } from "../Link/Link.constants";
+import { COLOR_VARIANT } from "../../constants";
 
 const SideNavigation: React.FC = () => {
   return (
@@ -12,13 +15,16 @@ const SideNavigation: React.FC = () => {
       <div className="sticky top-[89px] flex flex-col justify-between align-middle w-full h-[calc(100vh_-_6rem)]">
         <nav className="flex flex-col items-center w-full">
           <ul className="flex flex-col justify-center align-middle gap-2 w-min">
-            {resolvedSideNavigationLink.map(({ name }) => (
+            {resolvedSideNavigationLink.map(({ name, anchor }) => (
               <li
                 key={name}
                 className="flex justify-start items-center gap-3 text-accentColor-tertiary">
-                <span className="w-2 h-2 block rounded-full bg-accentColor-tertiary" />
-
-                <p className="text-nowrap text-xl">{name}</p>
+                <Link.anchor
+                  href={anchor}
+                  variant={LINK_VARIANT.LIST_ITEM}
+                  colorVariant={COLOR_VARIANT.TERTIARY}>
+                  {name}
+                </Link.anchor>
               </li>
             ))}
           </ul>
