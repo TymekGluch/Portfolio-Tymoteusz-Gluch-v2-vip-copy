@@ -96,7 +96,9 @@ const Carerre = ({
                         </>
                       ) : (
                         <>
-                          <p className="text-center opacity-90">now</p>
+                          <p className="text-center opacity-90 uppercase">
+                            now
+                          </p>
 
                           <CarerreBelt colorVariant={colorVariant} />
                         </>
