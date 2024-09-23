@@ -13,6 +13,7 @@ import BriefcaseIcon from "../assets/icons/briefcase.svg?react";
 import PaintBrushIcon from "../assets/icons/paintBrush.svg?react";
 import EnvelopeIcon from "../assets/icons/envelopeOpen.svg?react";
 import { COLOR_VARIANT } from "../constants";
+import { Carerre } from "../components/domain/homePage/Carerre";
 
 const HomePage: React.FC = () => {
   const { heading: aboutMeHeading, isLoading } = useFetchAboutMeData();
@@ -39,8 +40,9 @@ const HomePage: React.FC = () => {
         heading="Careere"
         sectionIcon={<BriefcaseIcon />}
         colorVariant={COLOR_VARIANT.TERTIARY}
-        sectionComponent={SECTION_COMPONENT.SECTION}
-      />
+        sectionComponent={SECTION_COMPONENT.SECTION}>
+        <Carerre />
+      </Section>
 
       <Section
         id="my-project"
