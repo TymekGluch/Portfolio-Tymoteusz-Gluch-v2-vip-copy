@@ -3,11 +3,8 @@ import {
   COLOR_VARIANT,
   TEXT_COLORS_CLASSES,
 } from "../../../../constants";
-import { ContentProgress, Progress } from "../../../Progress";
-import {
-  PROGRESS_STATUS,
-  PROGRESS_VARIANT,
-} from "../../../Progress/Progress.constants";
+import { ContentProgress } from "../../../Progress";
+import { PROGRESS_STATUS } from "../../../Progress/Progress.constants";
 import { useFetchCarerreData } from "./api/useFetchCarerreData.hook";
 import PuzzleIcon from "../../../../assets/icons/puzzle.svg?react";
 import ComputerIcon from "../../../../assets/icons/computer.svg?react";
