@@ -136,7 +136,7 @@ const Carerre = ({
                               key={uuid()}
                               className={twMerge(
                                 "block w-2 h-2 rounded-full",
-                                BG_COLORS_CLASSES?.[primaryColorVariant],
+                                BG_COLORS_CLASSES?.[colorVariant],
                                 resolvedOpacityClass
                               )}
                             />
