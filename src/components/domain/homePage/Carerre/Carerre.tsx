@@ -3,7 +3,7 @@ import {
   COLOR_VARIANT,
   TEXT_COLORS_CLASSES,
 } from "../../../../constants";
-import { Progress } from "../../../Progress";
+import { ContentProgress, Progress } from "../../../Progress";
 import {
   PROGRESS_STATUS,
   PROGRESS_VARIANT,
@@ -50,11 +50,24 @@ const Carerre = ({
   return (
     <ul className="flex flex-col justify-center items-center gap-4 w-full">
       {isError || isLoading ? (
-        <Progress
-          variant={PROGRESS_VARIANT.CIRCLE}
-          color={COLOR_VARIANT.TERTIARY}
-          status={isLoading ? PROGRESS_STATUS.LOADING : PROGRESS_STATUS.ERROR}
-        />
+        <div className="flex flex-col gap-4 w-1/2">
+          {Array.from({ length: 6 }, () => (
+            <li key={uuid()}>
+              {isError ? (
+                <ContentProgress
+                  status={PROGRESS_STATUS.ERROR}
+                  sizeClass="w-full h-8 rounded-full"
+                />
+              ) : (
+                <ContentProgress
+                  color={colorVariant}
+                  status={PROGRESS_STATUS.LOADING}
+                  sizeClass="w-full h-8 rounded-sm"
+                />
+              )}
+            </li>
+          ))}
+        </div>
       ) : (
         <>
           {data
@@ -83,8 +96,8 @@ const Carerre = ({
 
                 return (
                   <React.Fragment key={title}>
-                    <li className="flex flex-col justify-center items-center gap-2">
-                      <HeadingComponent className="text-lg uppercase text-center">
+                    <li className="flex flex-col justify-center items-center gap-1">
+                      <HeadingComponent className="text-md uppercase text-center">
                         {title}
                       </HeadingComponent>
                       {description && (
@@ -100,7 +113,7 @@ const Carerre = ({
                       ) : (
                         <div
                           className={twMerge(
-                            "w-12 h-12",
+                            "w-12 h-12 my-1",
                             TEXT_COLORS_CLASSES?.[primaryColorVariant]
                           )}>
                           {iconsArray[index]}
