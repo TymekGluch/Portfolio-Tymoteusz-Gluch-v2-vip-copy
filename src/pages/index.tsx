@@ -1,4 +1,3 @@
-import React from "react";
 import { Technologies } from "../components/domain/homePage/Technologies";
 import {
   TECHNOLOGIES_HEADING,
