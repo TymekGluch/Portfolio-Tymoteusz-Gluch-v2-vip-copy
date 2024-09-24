@@ -10,8 +10,7 @@ import ComputerIcon from "../../../../assets/icons/computer.svg?react";
 import ScaleIcon from "../../../../assets/icons/scale.svg?react";
 import WalletIcon from "../../../../assets/icons/wallet.svg?react";
 import { ValueOf } from "../../../../types/utiles";
-import { CARERRE_HEADING_VARIANT } from "./Carerre.constants";
-import { twMerge } from "tailwind-merge";
+import { CARERRE_HEADING_VARIANT, opacityArray } from "./Carerre.constants";
 import { CarerreBelt } from "./CarerreBelt";
 import React from "react";
 import {
@@ -19,6 +18,8 @@ import {
   getTimeDifferenceFullFormated,
   getTimeDifferenceInMonth,
 } from "./Carerre.utilities";
+import { v4 as uuid } from "uuid";
+import { twMerge } from "tailwind-merge";
 
 type CarerreProps = {
   headingComponent?: ValueOf<typeof CARERRE_HEADING_VARIANT>;
@@ -39,12 +40,6 @@ const Carerre = ({
     <ScaleIcon />,
     <WalletIcon />,
   ];
-
-  // const resolvedData = data?.reduce((accumulator, { startDate, finishDate, ...rest}, index) => {
-  //   const resolvedStartDate =
-
-  //   return accumulator
-  // },[])
 
   return (
     <ul className="flex flex-col justify-center items-center gap-4 w-full">
@@ -120,12 +115,22 @@ const Carerre = ({
                     </li>
 
                     {!isLastElement && (
-                      <div
-                        className={twMerge(
-                          "w-1/2 h-[0.063rem]",
-                          BG_COLORS_CLASSES?.[colorVariant]
-                        )}
-                      />
+                      <div className="flex justify-center items-center gap-3 w-full">
+                        {Array.from({ length: 11 }).map((_, index) => {
+                          const resolvedOpacityClass = opacityArray[index];
+
+                          return (
+                            <div
+                              key={uuid()}
+                              className={twMerge(
+                                "block w-2 h-2 rounded-full",
+                                BG_COLORS_CLASSES?.[colorVariant],
+                                resolvedOpacityClass
+                              )}
+                            />
+                          );
+                        })}
+                      </div>
                     )}
                   </React.Fragment>
                 );

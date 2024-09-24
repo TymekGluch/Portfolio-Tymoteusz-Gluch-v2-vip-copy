@@ -6,4 +6,18 @@ H4: 'h4',
 H5: 'h5',
 } as const;
 
-export { CARERRE_HEADING_VARIANT }
+const opacityArray = [
+    'opacity-15',
+    'opacity-30',
+    'opacity-45',
+    'opacity-60',
+    'opacity-85',
+    'opacity-100',
+    'opacity-85',
+    'opacity-60',
+    'opacity-45',
+    'opacity-30',
+    'opacity-15',
+]
+
+export { CARERRE_HEADING_VARIANT, opacityArray }
