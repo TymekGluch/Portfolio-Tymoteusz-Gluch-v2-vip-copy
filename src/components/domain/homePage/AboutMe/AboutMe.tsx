@@ -1,11 +1,16 @@
-import React from "react";
 import { useFetchAboutMeData } from "./AboutMe.hooks";
 import { ContentProgress } from "../../../Progress";
 import { PROGRESS_STATUS } from "../../../Progress/Progress.constants";
-import { COLOR_VARIANT } from "../../../../constants";
+import { BORDER_COLORS_CLASSES, COLOR_VARIANT } from "../../../../constants";
 import { v4 as uuid } from "uuid";
+import { twMerge } from "tailwind-merge";
+import { ValueOf } from "../../../../types/utiles";
 
-const AboutMe: React.FC = () => {
+type AboutMeProps = {
+  colorVariant?: ValueOf<typeof COLOR_VARIANT>;
+};
+
+const AboutMe = ({ colorVariant = COLOR_VARIANT.DEFAULT }: AboutMeProps) => {
   const { isError, isLoading, avatarAlt, avatarSorce, text } =
     useFetchAboutMeData();
 
@@ -15,7 +20,7 @@ const AboutMe: React.FC = () => {
         <>
           <ContentProgress
             status={isError ? PROGRESS_STATUS.ERROR : PROGRESS_STATUS.LOADING}
-            color={COLOR_VARIANT.DEFAULT}
+            color={colorVariant}
             sizeClass="min-w-48 h-48 rounded-full"
           />
 
@@ -26,7 +31,7 @@ const AboutMe: React.FC = () => {
                 status={
                   isError ? PROGRESS_STATUS.ERROR : PROGRESS_STATUS.LOADING
                 }
-                color={COLOR_VARIANT.DEFAULT}
+                color={colorVariant}
                 sizeClass="inline w-full h-4 rounded-sm"
               />
             ))}
@@ -35,7 +40,10 @@ const AboutMe: React.FC = () => {
       ) : (
         <>
           <img
-            className="min-w-48 h-48 object-cover rounded-full border-solid border-4 border-textColor-primary"
+            className={twMerge(
+              "min-w-48 h-48 object-cover rounded-full border-solid border-4",
+              BORDER_COLORS_CLASSES?.[colorVariant]
+            )}
             src={avatarSorce}
             alt={avatarAlt}
           />

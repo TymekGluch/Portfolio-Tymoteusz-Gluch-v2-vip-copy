@@ -15,7 +15,7 @@ import EnvelopeIcon from "../assets/icons/envelopeOpen.svg?react";
 import { COLOR_VARIANT } from "../constants";
 import { Carerre } from "../components/domain/homePage/Carerre";
 
-const HomePage: React.FC = () => {
+const HomePage = () => {
   const { heading: aboutMeHeading, isLoading } = useFetchAboutMeData();
 
   return (
@@ -24,7 +24,6 @@ const HomePage: React.FC = () => {
         id="about-me"
         heading={isLoading ? "loading..." : aboutMeHeading}
         sectionIcon={<UserIcon />}
-        colorVariant={COLOR_VARIANT.DEFAULT}
         sectionComponent={SECTION_COMPONENT.HEADER}>
         <AboutMe />
       </Section>
@@ -41,7 +40,10 @@ const HomePage: React.FC = () => {
         sectionIcon={<BriefcaseIcon />}
         colorVariant={COLOR_VARIANT.TERTIARY}
         sectionComponent={SECTION_COMPONENT.SECTION}>
-        <Carerre />
+        <Carerre
+          colorVariant={COLOR_VARIANT.TERTIARY}
+          primaryColorVariant={COLOR_VARIANT.PRIMARY}
+        />
       </Section>
 
       <Section

@@ -12,7 +12,7 @@ const opacityArray = [
     'opacity-45',
     'opacity-60',
     'opacity-85',
-    'opacity-100',
+    'opacity-100,',
     'opacity-85',
     'opacity-60',
     'opacity-45',

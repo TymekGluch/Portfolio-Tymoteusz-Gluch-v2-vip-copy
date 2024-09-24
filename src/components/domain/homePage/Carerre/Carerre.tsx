@@ -1,4 +1,8 @@
-import { BG_COLORS_CLASSES, COLOR_VARIANT } from "../../../../constants";
+import {
+  BG_COLORS_CLASSES,
+  COLOR_VARIANT,
+  TEXT_COLORS_CLASSES,
+} from "../../../../constants";
 import { Progress } from "../../../Progress";
 import {
   PROGRESS_STATUS,
@@ -24,11 +28,13 @@ import { twMerge } from "tailwind-merge";
 type CarerreProps = {
   headingComponent?: ValueOf<typeof CARERRE_HEADING_VARIANT>;
   colorVariant?: ValueOf<typeof COLOR_VARIANT>;
+  primaryColorVariant?: ValueOf<typeof COLOR_VARIANT>;
 };
 
 const Carerre = ({
   headingComponent = CARERRE_HEADING_VARIANT.H2,
-  colorVariant = COLOR_VARIANT.TERTIARY,
+  colorVariant = COLOR_VARIANT.DEFAULT,
+  primaryColorVariant = COLOR_VARIANT.DEFAULT,
 }: CarerreProps) => {
   const { data, isLoading, isError } = useFetchCarerreData();
 
@@ -92,7 +98,13 @@ const Carerre = ({
                           className="w-12 h-12 object-contain rounded-full"
                         />
                       ) : (
-                        <div className="w-12 h-12">{iconsArray[index]}</div>
+                        <div
+                          className={twMerge(
+                            "w-12 h-12",
+                            TEXT_COLORS_CLASSES?.[primaryColorVariant]
+                          )}>
+                          {iconsArray[index]}
+                        </div>
                       )}
                       {resolvedFinishDate ? (
                         <>
@@ -124,7 +136,7 @@ const Carerre = ({
                               key={uuid()}
                               className={twMerge(
                                 "block w-2 h-2 rounded-full",
-                                BG_COLORS_CLASSES?.[colorVariant],
+                                BG_COLORS_CLASSES?.[primaryColorVariant],
                                 resolvedOpacityClass
                               )}
                             />
