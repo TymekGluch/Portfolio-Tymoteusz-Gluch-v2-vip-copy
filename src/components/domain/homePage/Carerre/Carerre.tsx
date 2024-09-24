@@ -98,9 +98,9 @@ const Carerre = ({
                         {title}
                       </HeadingComponent>
                       {description && (
-                        <p className="text-center opacity-90">{description}</p>
+                        <p className="text-center opacity-85">{description}</p>
                       )}
-                      <p className="opacity-90">{differenceInYearAndMonth}</p>
+                      <p className="opacity-85">{differenceInYearAndMonth}</p>
                       {image ? (
                         <img
                           src={image}
@@ -118,7 +118,7 @@ const Carerre = ({
                       )}
                       {resolvedFinishDate ? (
                         <>
-                          <p className="text-center opacity-90">
+                          <p className="text-center opacity-85">
                             to {resolvedFinishDate}
                           </p>
 
@@ -126,12 +126,12 @@ const Carerre = ({
                         </>
                       ) : (
                         <>
-                          <p className="text-center opacity-90">Now</p>
+                          <p className="text-center opacity-85">Now</p>
 
                           <CarerreBelt colorVariant={colorVariant} />
                         </>
                       )}
-                      <p className="text-center opacity-90">
+                      <p className="text-center opacity-85">
                         from {resolvedStartDate}
                       </p>
                     </li>
