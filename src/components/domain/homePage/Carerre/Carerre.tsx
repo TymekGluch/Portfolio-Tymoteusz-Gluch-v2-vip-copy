@@ -14,6 +14,11 @@ import { CARERRE_HEADING_VARIANT } from "./Carerre.constants";
 import { twMerge } from "tailwind-merge";
 import { CarerreBelt } from "./CarerreBelt";
 import React from "react";
+import {
+  getResolvedYYYYMonthNameFormat,
+  getTimeDifferenceFullFormated,
+  getTimeDifferenceInMonth,
+} from "./Carerre.utilities";
 
 type CarerreProps = {
   headingComponent?: ValueOf<typeof CARERRE_HEADING_VARIANT>;
@@ -43,16 +48,9 @@ const Carerre = ({
 
   return (
     <ul className="flex flex-col justify-center items-center gap-4 w-full">
-      <li
-        className={twMerge(
-          "w-1/5 h-[0.063rem]",
-          BG_COLORS_CLASSES?.[colorVariant]
-        )}
-      />
-
       {isError || isLoading ? (
         <Progress
-          variant={PROGRESS_VARIANT.LINEAR}
+          variant={PROGRESS_VARIANT.CIRCLE}
           color={COLOR_VARIANT.TERTIARY}
           status={isLoading ? PROGRESS_STATUS.LOADING : PROGRESS_STATUS.ERROR}
         />
@@ -68,6 +66,20 @@ const Carerre = ({
               ) => {
                 const isLastElement = index === array.length - 1;
 
+                const resolvedStartDate =
+                  getResolvedYYYYMonthNameFormat(startDate);
+                const resolvedFinishDate =
+                  finishDate && getResolvedYYYYMonthNameFormat(finishDate);
+
+                const currentDate = new Date().toISOString().split("T")[0];
+                const differenceInMonth = getTimeDifferenceInMonth(
+                  startDate,
+                  finishDate ?? currentDate
+                );
+
+                const differenceInYearAndMonth =
+                  getTimeDifferenceFullFormated(differenceInMonth);
+
                 return (
                   <React.Fragment key={title}>
                     <li className="flex flex-col justify-center items-center gap-2">
@@ -77,6 +89,7 @@ const Carerre = ({
                       {description && (
                         <p className="text-center opacity-90">{description}</p>
                       )}
+                      <p className="opacity-90">{differenceInYearAndMonth}</p>
                       {image ? (
                         <img
                           src={image}
@@ -86,30 +99,30 @@ const Carerre = ({
                       ) : (
                         <div className="w-12 h-12">{iconsArray[index]}</div>
                       )}
-                      {finishDate ? (
+                      {resolvedFinishDate ? (
                         <>
                           <p className="text-center opacity-90">
-                            to {finishDate}
+                            to {resolvedFinishDate}
                           </p>
 
                           <CarerreBelt colorVariant={colorVariant} />
                         </>
                       ) : (
                         <>
-                          <p className="text-center opacity-90 uppercase">
-                            now
-                          </p>
+                          <p className="text-center opacity-90">Now</p>
 
                           <CarerreBelt colorVariant={colorVariant} />
                         </>
                       )}
-                      <p className="text-center opacity-90">from {startDate}</p>
+                      <p className="text-center opacity-90">
+                        from {resolvedStartDate}
+                      </p>
                     </li>
 
                     {!isLastElement && (
                       <div
                         className={twMerge(
-                          "w-1/3 h-[0.063rem]",
+                          "w-1/2 h-[0.063rem]",
                           BG_COLORS_CLASSES?.[colorVariant]
                         )}
                       />
@@ -120,13 +133,6 @@ const Carerre = ({
             )}
         </>
       )}
-
-      <li
-        className={twMerge(
-          "w-1/5 h-[0.063rem]",
-          BG_COLORS_CLASSES?.[colorVariant]
-        )}
-      />
     </ul>
   );
 };
