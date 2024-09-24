@@ -94,7 +94,7 @@ const Carerre = ({
                 return (
                   <React.Fragment key={title}>
                     <li className="flex flex-col justify-center items-center gap-1">
-                      <HeadingComponent className="text-md uppercase text-center">
+                      <HeadingComponent className="text-md uppercase text-center font-bold">
                         {title}
                       </HeadingComponent>
                       {description && (
