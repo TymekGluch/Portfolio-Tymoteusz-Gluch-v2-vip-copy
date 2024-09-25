@@ -1,22 +1,13 @@
-import {
-  BG_COLORS_CLASSES,
-  COLOR_VARIANT,
-  TEXT_COLORS_CLASSES,
-} from "../../../../constants";
+import { BG_COLORS_CLASSES, COLOR_VARIANT } from "../../../../constants";
 import { ContentProgress } from "../../../Progress";
 import { PROGRESS_STATUS } from "../../../Progress/Progress.constants";
 import { useFetchCarerreData } from "./api/useFetchCarerreData.hook";
-import PuzzleIcon from "../../../../assets/icons/puzzle.svg?react";
-import ComputerIcon from "../../../../assets/icons/computer.svg?react";
-import ScaleIcon from "../../../../assets/icons/scale.svg?react";
-import WalletIcon from "../../../../assets/icons/wallet.svg?react";
 import { ValueOf } from "../../../../types/utiles";
 import {
   CARERRE_HEADING_VARIANT,
   CARERRE_TIMELINE_VARIANT,
   opacityArray,
 } from "./CarerreTimeline.constants";
-import { CarerreBelt } from "./CarerreBelt";
 import React from "react";
 import {
   getResolvedYYYYMonthNameFormat,
@@ -25,6 +16,9 @@ import {
 } from "./CarerreTimeline.utilities";
 import { v4 as uuid } from "uuid";
 import { twMerge } from "tailwind-merge";
+import { useIsMobile } from "../../../../hooks";
+import { CarerreItemHeader } from "./components/CarerreItemHeader";
+import { CarerreItemTimeline } from "./components/CarerreItemTimeline";
 
 type CarerreTimelineProps = {
   headingComponent?: ValueOf<typeof CARERRE_HEADING_VARIANT>;
@@ -40,15 +34,7 @@ const CarerreTimeline = ({
   variant = CARERRE_TIMELINE_VARIANT.CIRCLE,
 }: CarerreTimelineProps) => {
   const { data, isLoading, isError } = useFetchCarerreData();
-
-  const HeadingComponent = headingComponent;
-
-  const iconsArray: React.ReactNode[] = [
-    <PuzzleIcon />,
-    <ComputerIcon />,
-    <ScaleIcon />,
-    <WalletIcon />,
-  ];
+  const isMobile = useIsMobile();
 
   return (
     <ul className="flex flex-col justify-center items-center gap-4 w-full">
@@ -100,57 +86,54 @@ const CarerreTimeline = ({
 
                 return (
                   <React.Fragment key={title}>
-                    <li className="flex flex-col justify-center items-center gap-1">
-                      <HeadingComponent className="text-md uppercase text-center font-bold">
-                        {title}
-                      </HeadingComponent>
-                      {description && (
-                        <p className="text-center opacity-85">{description}</p>
-                      )}
-                      <p className="opacity-85">{periodSummary}</p>
-                      {image ? (
-                        <img
-                          src={image}
-                          alt=""
-                          className="w-12 h-12 object-contain rounded-full"
-                        />
-                      ) : (
-                        <div
-                          className={twMerge(
-                            "w-12 h-12 my-1",
-                            TEXT_COLORS_CLASSES?.[primaryColorVariant]
-                          )}>
-                          {iconsArray[index]}
-                        </div>
-                      )}
-                      {resolvedFinishDate ? (
-                        <>
-                          <p className="text-center opacity-85">
-                            to {resolvedFinishDate}
-                          </p>
+                    <li className="w-full">
+                      <section className="flex lg:grid lg:grid-cols-12 flex-col justify-center items-center gap-1 w-full h-fit">
+                        {isMobile ? (
+                          <>
+                            <CarerreItemHeader
+                              title={title}
+                              description={description}
+                              periodSummary={periodSummary}
+                              imageSrc={image}
+                              headingTag={headingComponent}
+                              index={index}
+                              primaryColorVarint={primaryColorVariant}
+                            />
 
-                          <CarerreBelt
-                            colorVariant={colorVariant}
-                            variant={variant}
-                          />
-                        </>
-                      ) : (
-                        <>
-                          <p className="text-center opacity-85">Now</p>
+                            <CarerreItemTimeline
+                              startDate={resolvedStartDate}
+                              finishDate={resolvedFinishDate}
+                              isMobile={isMobile}
+                              colorVariant={colorVariant}
+                              variant={variant}
+                            />
+                          </>
+                        ) : (
+                          <>
+                            <CarerreItemTimeline
+                              startDate={resolvedStartDate}
+                              finishDate={resolvedFinishDate}
+                              isMobile={isMobile}
+                              colorVariant={colorVariant}
+                              variant={variant}
+                            />
 
-                          <CarerreBelt
-                            colorVariant={colorVariant}
-                            variant={variant}
-                          />
-                        </>
-                      )}
-                      <p className="text-center opacity-85">
-                        from {resolvedStartDate}
-                      </p>
+                            <CarerreItemHeader
+                              title={title}
+                              description={description}
+                              periodSummary={periodSummary}
+                              imageSrc={image}
+                              headingTag={headingComponent}
+                              index={index}
+                              primaryColorVarint={primaryColorVariant}
+                            />
+                          </>
+                        )}
+                      </section>
                     </li>
 
                     {!isLastElement && (
-                      <div className="flex justify-center items-center gap-3 w-full">
+                      <li className="flex justify-center items-center gap-3 w-full">
                         {Array.from({ length: 11 }).map((_, index) => {
                           const resolvedOpacityClass = opacityArray[index];
 
@@ -167,7 +150,7 @@ const CarerreTimeline = ({
                             />
                           );
                         })}
-                      </div>
+                      </li>
                     )}
                   </React.Fragment>
                 );
