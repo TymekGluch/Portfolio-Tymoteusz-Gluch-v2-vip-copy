@@ -49,7 +49,7 @@ const HomePage = () => {
 
       <Section
         id="my-project"
-        heading="My porject"
+        heading="My projects"
         sectionIcon={<PaintBrushIcon />}
         colorVariant={COLOR_VARIANT.SECONDARY}
         sectionComponent={SECTION_COMPONENT.SECTION}
