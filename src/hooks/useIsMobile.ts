@@ -8,6 +8,8 @@ const useIsMobile = (): boolean => {
         const mediaQuery = window.matchMedia(BREAKPOINTS_MIN_KEYS.SMALL_DESKTOP)
         const handleResize = (event: MediaQueryListEvent) => setIsMobile(!event.matches)
 
+        setIsMobile(!mediaQuery.matches)
+
         mediaQuery.addEventListener('change', handleResize)
 
         return () => {
