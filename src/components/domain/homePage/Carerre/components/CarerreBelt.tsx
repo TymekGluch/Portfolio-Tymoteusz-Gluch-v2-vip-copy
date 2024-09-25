@@ -30,7 +30,7 @@ const CarerreBelt = ({
         />
 
         {!isMobile && (
-          <p className="absolute left-8 opacity-85 w-min">
+          <p className="absolute left-8 opacity-85 w-min text-center">
             {finishDate ?? "Now"}
           </p>
         )}
@@ -54,7 +54,9 @@ const CarerreBelt = ({
         />
 
         {!isMobile && (
-          <p className="absolute left-8 opacity-85 w-min">{startDate}</p>
+          <p className="absolute left-8 opacity-85 w-min text-center">
+            {startDate}
+          </p>
         )}
       </div>
     </div>

@@ -133,23 +133,33 @@ const CarerreTimeline = ({
                     </li>
 
                     {!isLastElement && (
-                      <li className="flex justify-center items-center gap-3 w-full">
-                        {Array.from({ length: 11 }).map((_, index) => {
-                          const resolvedOpacityClass = opacityArray[index];
+                      <li
+                        className={twMerge(
+                          "flex justify-center items-center gap-3 w-full xl:gap-5",
+                          !isMobile && "my-4"
+                        )}>
+                        {Array.from({ length: isMobile ? 11 : 22 }).map(
+                          (_, index) => {
+                            const resolvedIndex = !isMobile
+                              ? Math.floor(index / 2)
+                              : index;
+                            const resolvedOpacityClass =
+                              opacityArray[resolvedIndex];
 
-                          return (
-                            <div
-                              key={uuid()}
-                              className={twMerge(
-                                "block w-2 h-2",
-                                BG_COLORS_CLASSES?.[colorVariant],
-                                resolvedOpacityClass,
-                                variant === CARERRE_TIMELINE_VARIANT.CIRCLE &&
-                                  "rounded-full"
-                              )}
-                            />
-                          );
-                        })}
+                            return (
+                              <div
+                                key={uuid()}
+                                className={twMerge(
+                                  "block w-2 h-2",
+                                  BG_COLORS_CLASSES?.[colorVariant],
+                                  resolvedOpacityClass,
+                                  variant === CARERRE_TIMELINE_VARIANT.CIRCLE &&
+                                    "rounded-full"
+                                )}
+                              />
+                            );
+                          }
+                        )}
                       </li>
                     )}
                   </React.Fragment>
