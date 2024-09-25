@@ -12,7 +12,8 @@ import BriefcaseIcon from "../assets/icons/briefcase.svg?react";
 import PaintBrushIcon from "../assets/icons/paintBrush.svg?react";
 import EnvelopeIcon from "../assets/icons/envelopeOpen.svg?react";
 import { COLOR_VARIANT } from "../constants";
-import { Carerre } from "../components/domain/homePage/Carerre";
+import { CarerreTimeline } from "../components/domain/homePage/Carerre";
+import { CARERRE_TIMELINE_VARIANT } from "../components/domain/homePage/Carerre/CarerreTimeline.constants";
 
 const HomePage = () => {
   const { heading: aboutMeHeading, isLoading } = useFetchAboutMeData();
@@ -39,8 +40,9 @@ const HomePage = () => {
         sectionIcon={<BriefcaseIcon />}
         colorVariant={COLOR_VARIANT.TERTIARY}
         sectionComponent={SECTION_COMPONENT.SECTION}>
-        <Carerre
+        <CarerreTimeline
           colorVariant={COLOR_VARIANT.TERTIARY}
+          variant={CARERRE_TIMELINE_VARIANT.SQUERE}
           primaryColorVariant={COLOR_VARIANT.PRIMARY}
         />
       </Section>

@@ -20,4 +20,9 @@ const opacityArray = [
     'opacity-15',
 ]
 
-export { CARERRE_HEADING_VARIANT, opacityArray }
+const CARERRE_TIMELINE_VARIANT = {
+    SQUERE: 'squere',
+    CIRCLE: 'circle'
+} as const
+
+export { CARERRE_HEADING_VARIANT, CARERRE_TIMELINE_VARIANT, opacityArray }

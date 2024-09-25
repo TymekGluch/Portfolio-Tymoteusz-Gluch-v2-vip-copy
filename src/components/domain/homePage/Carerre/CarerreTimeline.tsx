@@ -11,28 +11,34 @@ import ComputerIcon from "../../../../assets/icons/computer.svg?react";
 import ScaleIcon from "../../../../assets/icons/scale.svg?react";
 import WalletIcon from "../../../../assets/icons/wallet.svg?react";
 import { ValueOf } from "../../../../types/utiles";
-import { CARERRE_HEADING_VARIANT, opacityArray } from "./Carerre.constants";
+import {
+  CARERRE_HEADING_VARIANT,
+  CARERRE_TIMELINE_VARIANT,
+  opacityArray,
+} from "./CarerreTimeline.constants";
 import { CarerreBelt } from "./CarerreBelt";
 import React from "react";
 import {
   getResolvedYYYYMonthNameFormat,
   getTimeDifferenceFullFormated,
   getTimeDifferenceInMonth,
-} from "./Carerre.utilities";
+} from "./CarerreTimeline.utilities";
 import { v4 as uuid } from "uuid";
 import { twMerge } from "tailwind-merge";
 
-type CarerreProps = {
+type CarerreTimelineProps = {
   headingComponent?: ValueOf<typeof CARERRE_HEADING_VARIANT>;
+  variant?: ValueOf<typeof CARERRE_TIMELINE_VARIANT>;
   colorVariant?: ValueOf<typeof COLOR_VARIANT>;
   primaryColorVariant?: ValueOf<typeof COLOR_VARIANT>;
 };
 
-const Carerre = ({
+const CarerreTimeline = ({
   headingComponent = CARERRE_HEADING_VARIANT.H2,
   colorVariant = COLOR_VARIANT.DEFAULT,
   primaryColorVariant = COLOR_VARIANT.DEFAULT,
-}: CarerreProps) => {
+  variant = CARERRE_TIMELINE_VARIANT.CIRCLE,
+}: CarerreTimelineProps) => {
   const { data, isLoading, isError } = useFetchCarerreData();
 
   const HeadingComponent = headingComponent;
@@ -90,6 +96,7 @@ const Carerre = ({
 
                 const differenceInYearAndMonth =
                   getTimeDifferenceFullFormated(differenceInMonth);
+                const periodSummary = `{ ${differenceInYearAndMonth} }`;
 
                 return (
                   <React.Fragment key={title}>
@@ -100,7 +107,7 @@ const Carerre = ({
                       {description && (
                         <p className="text-center opacity-85">{description}</p>
                       )}
-                      <p className="opacity-85">{differenceInYearAndMonth}</p>
+                      <p className="opacity-85">{periodSummary}</p>
                       {image ? (
                         <img
                           src={image}
@@ -122,13 +129,19 @@ const Carerre = ({
                             to {resolvedFinishDate}
                           </p>
 
-                          <CarerreBelt colorVariant={colorVariant} />
+                          <CarerreBelt
+                            colorVariant={colorVariant}
+                            variant={variant}
+                          />
                         </>
                       ) : (
                         <>
                           <p className="text-center opacity-85">Now</p>
 
-                          <CarerreBelt colorVariant={colorVariant} />
+                          <CarerreBelt
+                            colorVariant={colorVariant}
+                            variant={variant}
+                          />
                         </>
                       )}
                       <p className="text-center opacity-85">
@@ -145,9 +158,11 @@ const Carerre = ({
                             <div
                               key={uuid()}
                               className={twMerge(
-                                "block w-2 h-2 rounded-full",
+                                "block w-2 h-2",
                                 BG_COLORS_CLASSES?.[colorVariant],
-                                resolvedOpacityClass
+                                resolvedOpacityClass,
+                                variant === CARERRE_TIMELINE_VARIANT.CIRCLE &&
+                                  "rounded-full"
                               )}
                             />
                           );
@@ -164,4 +179,4 @@ const Carerre = ({
   );
 };
 
-export { Carerre };
+export { CarerreTimeline };
