@@ -41,7 +41,7 @@ const AboutMe = ({ colorVariant = COLOR_VARIANT.DEFAULT }: AboutMeProps) => {
         <>
           <img
             className={twMerge(
-              "min-w-48 h-48 object-cover rounded-full border-solid border-4",
+              "min-w-48 h-48 object-cover rounded-full border-4 border-dashed",
               BORDER_COLORS_CLASSES?.[colorVariant]
             )}
             src={avatarSorce}
