@@ -63,7 +63,14 @@ const CarerreTimeline = ({
             ?.reverse()
             ?.map(
               (
-                { title, description, image, startDate, finishDate },
+                {
+                  title,
+                  image: imageSrc,
+                  startDate,
+                  finishDate,
+                  shortDescription,
+                  carerrePeriodDescription,
+                },
                 index,
                 array
               ) => {
@@ -82,7 +89,11 @@ const CarerreTimeline = ({
 
                 const differenceInYearAndMonth =
                   getTimeDifferenceFullFormated(differenceInMonth);
-                const periodSummary = `{ ${differenceInYearAndMonth} }`;
+                const periodSummary = `{${differenceInYearAndMonth}ds}`;
+
+                const resolvedDescription =
+                  carerrePeriodDescription?.content?.[0]?.content[0]?.value ??
+                  "";
 
                 return (
                   <React.Fragment key={title}>
@@ -91,13 +102,13 @@ const CarerreTimeline = ({
                         {isMobile ? (
                           <>
                             <CarerreItemHeader
-                              title={title}
-                              description={description}
                               periodSummary={periodSummary}
-                              imageSrc={image}
+                              primaryColorVarint={primaryColorVariant}
                               headingTag={headingComponent}
                               index={index}
-                              primaryColorVarint={primaryColorVariant}
+                              title={title}
+                              shortDescription={shortDescription}
+                              imageSrc={imageSrc}
                             />
 
                             <CarerreItemTimeline
@@ -120,13 +131,19 @@ const CarerreTimeline = ({
 
                             <CarerreItemHeader
                               title={title}
-                              description={description}
+                              shortDescription={shortDescription}
                               periodSummary={periodSummary}
-                              imageSrc={image}
+                              imageSrc={imageSrc}
                               headingTag={headingComponent}
                               index={index}
                               primaryColorVarint={primaryColorVariant}
                             />
+
+                            {!isMobile && (
+                              <div className="flex justify-center items-center h-full col-span-7 ml-5">
+                                {resolvedDescription}
+                              </div>
+                            )}
                           </>
                         )}
                       </section>

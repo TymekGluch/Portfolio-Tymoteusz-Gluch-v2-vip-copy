@@ -9,7 +9,7 @@ import { twMerge } from "tailwind-merge";
 
 type CarerreItemHeaderProps = {
   title: string;
-  description: string | null;
+  shortDescription: string | null;
   periodSummary: string;
   imageSrc: string | null;
   index: number;
@@ -26,7 +26,7 @@ const iconsArray: React.ReactNode[] = [
 
 const CarerreItemHeader = ({
   title,
-  description,
+  shortDescription,
   periodSummary,
   imageSrc,
   index,
@@ -41,7 +41,9 @@ const CarerreItemHeader = ({
         {title}
       </HeadingComponent>
 
-      {description && <p className="text-center opacity-85">{description}</p>}
+      {shortDescription && (
+        <p className="text-center opacity-85">{shortDescription}</p>
+      )}
 
       <p className="opacity-85 text-nowrap">{periodSummary}</p>
 

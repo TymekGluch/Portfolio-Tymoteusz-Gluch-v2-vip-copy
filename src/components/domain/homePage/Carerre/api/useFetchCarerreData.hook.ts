@@ -18,23 +18,25 @@ type EntryFieldDataType = {
 type SingularCarereEntryType = {
     fields: {
         title: string;
-        description: string | null;
+        shortDescription: string | null;
         startDate: string
         finishDate: string | null;
         image: {
             sys: {
                 id: string;
             }
-        } | null
+        } | null,
+        carerrePeriodDescription: unknown;
     },
 }
 
 type DataType = {
     title: string;
-    description: string | null;
+    shortDescription: string | null;
     startDate: string;
     finishDate: string | null
     image: string | null;
+    carerrePeriodDescription: unknown;
 }
 
 type CarerreDataReturnType = {

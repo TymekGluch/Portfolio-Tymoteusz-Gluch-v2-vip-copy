@@ -71,7 +71,7 @@ const Technologies: React.FC<TechnologiesProps> = ({
     <Component
       id={id}
       className={classNames(
-        "flex justify-center items-center flex-wrap gap-8 w-full h-fit p-6 border-solid border border-accentColor-secondary rounded-2xl",
+        "flex justify-center items-center flex-wrap gap-8 w-full h-fit p-6 border-accentColor-secondary rounded-2xl border-2 border-dashed",
         variant === TECHNOLOGIES_VARIANT.MOBILE_SECTION &&
           "lg:hidden shadow-none scroll-m-28",
         isLoading && "animate-pulse"
@@ -86,7 +86,7 @@ const Technologies: React.FC<TechnologiesProps> = ({
           {data?.fields?.heading ?? "loading..."}
 
           {variant === TECHNOLOGIES_VARIANT.MOBILE_SECTION && (
-            <span className="block w-full h-px bg-accentColor-secondary" />
+            <span className="block w-full h-px bg-transparent border-b-2 border-accentColor-secondary border-dashed" />
           )}
         </HeadingTag>
       )}

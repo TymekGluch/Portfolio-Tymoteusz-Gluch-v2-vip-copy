@@ -14,9 +14,15 @@ import EnvelopeIcon from "../assets/icons/envelopeOpen.svg?react";
 import { COLOR_VARIANT } from "../constants";
 import { CarerreTimeline } from "../components/domain/homePage/Carerre";
 import { CARERRE_TIMELINE_VARIANT } from "../components/domain/homePage/Carerre/CarerreTimeline.constants";
+import { useIsMobile } from "../hooks";
 
 const HomePage = () => {
   const { heading: aboutMeHeading, isLoading } = useFetchAboutMeData();
+  const isMobile = useIsMobile();
+
+  const carerreVariant = !isMobile
+    ? CARERRE_TIMELINE_VARIANT.SQUERE
+    : CARERRE_TIMELINE_VARIANT.CIRCLE;
 
   return (
     <>
@@ -42,7 +48,7 @@ const HomePage = () => {
         sectionComponent={SECTION_COMPONENT.SECTION}>
         <CarerreTimeline
           colorVariant={COLOR_VARIANT.TERTIARY}
-          variant={CARERRE_TIMELINE_VARIANT.SQUERE}
+          variant={carerreVariant}
           primaryColorVariant={COLOR_VARIANT.PRIMARY}
         />
       </Section>
