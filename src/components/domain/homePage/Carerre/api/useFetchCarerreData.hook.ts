@@ -15,6 +15,19 @@ type EntryFieldDataType = {
     }
 }
 
+
+type InsideContentType = {
+    value: string;
+}
+
+type ContentType = {
+    content: InsideContentType[]
+}
+
+type CarerreRichTextPeriodDescriptionType = {
+    content: ContentType[]
+}
+
 type SingularCarereEntryType = {
     fields: {
         title: string;
@@ -26,7 +39,7 @@ type SingularCarereEntryType = {
                 id: string;
             }
         } | null,
-        carerrePeriodDescription: unknown;
+        carerrePeriodDescription: CarerreRichTextPeriodDescriptionType;
     },
 }
 
@@ -36,7 +49,7 @@ type DataType = {
     startDate: string;
     finishDate: string | null
     image: string | null;
-    carerrePeriodDescription: unknown;
+    carerrePeriodDescription: string;
 }
 
 type CarerreDataReturnType = {
@@ -91,17 +104,18 @@ const useFetchCarerreData = (): CarerreDataReturnType => {
     const isLoading = isAssetLoading || singularEntriesIsLoading || referenceIsLoading
     const isError = isAssetError || singularEntriesIsError || referenceIsError
 
-    const data = singularCarerreData 
+    const data: DataType[] | null = singularCarerreData 
         && singularCarerreData
             ?.map((objectWithField) => objectWithField.fields)
             ?.map((currentFields, index) => {
                 const isAssetExist = typeof filteredAssetsReferenceIndexesArray.find((current) => current === index) === 'number'
                 const indexOfAsset = filteredAssetsReferenceIndexesArray.findIndex((current) => current === index)
                 const resolvedIndexOfAsset = indexOfAsset !== -1 && indexOfAsset
+                const resolvedPeriodDescription = currentFields?.carerrePeriodDescription.content[0].content[0].value
 
                 return isAssetExist 
-                    ? {...currentFields, image: imagesData && typeof resolvedIndexOfAsset === 'number' && imagesData[resolvedIndexOfAsset]?.fields?.file?.url}
-                    : currentFields
+                    ? {...currentFields, image: imagesData && typeof resolvedIndexOfAsset === 'number' && imagesData[resolvedIndexOfAsset]?.fields?.file?.url, carerrePeriodDescription: resolvedPeriodDescription}
+                    : {...currentFields, carerrePeriodDescription: resolvedPeriodDescription}
             }) 
     
     return { isLoading, isError, data }

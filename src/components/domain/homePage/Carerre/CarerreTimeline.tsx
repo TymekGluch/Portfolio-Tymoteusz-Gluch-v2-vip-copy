@@ -91,10 +91,6 @@ const CarerreTimeline = ({
                   getTimeDifferenceFullFormated(differenceInMonth);
                 const periodSummary = `{${differenceInYearAndMonth}ds}`;
 
-                const resolvedDescription =
-                  carerrePeriodDescription?.content?.[0]?.content[0]?.value ??
-                  "";
-
                 return (
                   <React.Fragment key={title}>
                     <li className="w-full">
@@ -141,7 +137,7 @@ const CarerreTimeline = ({
 
                             {!isMobile && (
                               <div className="flex justify-center items-center h-full col-span-7 ml-5">
-                                {resolvedDescription}
+                                {carerrePeriodDescription}
                               </div>
                             )}
                           </>
