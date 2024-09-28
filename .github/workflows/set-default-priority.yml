@@ -17,8 +17,9 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/events)
 
-          echo "Response: $response"
+          echo "Response: $response"  # Logowanie odpowiedzi
 
+          # Sprawdzenie, czy zdarzenie added_to_project jest obecne
           project_id=$(echo "$response" | jq -r '.[] | select(.event == "added_to_project") | .project.id' | head -n 1)
 
           if [[ -n "$project_id" ]]; then
@@ -30,4 +31,4 @@ jobs:
 
       - name: Output Project ID
         run: |
-          echo "The project ID is: $PROJECT_ID"  # Używaj bez podwójnych nawiasów
+          echo "The project ID is: $PROJECT_ID"
