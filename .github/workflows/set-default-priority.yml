@@ -1,28 +1,39 @@
-name: Example Workflow
+name: Get Project ID from Issue
 
 on:
   issues:
     types: [opened]
 
 jobs:
-  example-job:
+  get-project-id:
     runs-on: ubuntu-latest
+
     steps:
+      - name: Check out the repository
+        uses: actions/checkout@v2
+
       - name: Get Issue Events
         id: get_events
         run: |
           response=$(curl -L \
-            -H "Authorization: token ${{ secrets.MY_PAT }}" \
-            -H "Accept: application/vnd.github.v3+json" \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.MY_PAT }}" \
             https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/events)
-
-          echo "Response: $response"
           
-          project_id=$(echo "$response" | jq -r '.[] | select(.event == "added_to_project") | .project_id')
+          echo "Response: $response"
+          echo "$response" > events.json
 
-          if [ -z "$project_id" ]; then
+      - name: Get Project ID
+        id: get_project_id
+        run: |
+          project_id=$(jq -r '.[] | select(.event == "added_to_project") | .project.id' events.json | head -n 1)
+          
+          if [[ -z "$project_id" ]]; then
             echo "No project ID found."
           else
             echo "Project ID: $project_id"
             echo "PROJECT_ID=$project_id" >> $GITHUB_ENV
           fi
+
+      - name: Output Project ID
+        run: echo "The project ID is: ${{ env.PROJECT_ID }}"
