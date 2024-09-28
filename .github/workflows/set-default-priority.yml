@@ -9,28 +9,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get event
-        id: get_project_id
-        run: |
-          # Wywołanie API do pobrania zdarzeń
-          response=$(curl -L \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: token ${{ secrets.MY_PAT }}" \
-            https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/events)
-
-          # Logowanie pełnej odpowiedzi
-          echo "Full Response: $response"
-
+     - name: Get event
+       id: get_project_id
+       run: |
+        # Wywołanie API do pobrania zdarzeń
+        response=$(curl -s -o response.json -w "%{http_code}" \
+          -H "Accept: application/vnd.github+json" \
+          -H "Authorization: token ${{ secrets.MY_PAT }}" \
+          https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/events)
+    
+        # Sprawdzenie kodu statusu
+        if [[ "$response" -ne 200 ]]; then
+          echo "Failed to fetch events. HTTP Status Code: $response"
+          cat response.json  # Logowanie treści odpowiedzi
+        else
+          echo "Full Response: $(cat response.json)"  # Logowanie pełnej odpowiedzi
+    
           # Sprawdzenie, czy zdarzenie added_to_project jest obecne
-          project_id=$(echo "$response" | jq -r '.[] | select(.event == "added_to_project") | .project.id' | head -n 1)
-
+          project_id=$(jq -r '.[] | select(.event == "added_to_project") | .project.id' response.json | head -n 1)
+    
           if [[ -n "$project_id" ]]; then
             echo "PROJECT_ID=$project_id" >> $GITHUB_ENV
-            echo "Project ID found: $project_id"  # Logowanie znalezionego ID projektu
+            echo "Project ID found: $project_id"
           else
             echo "No project ID found. Issues --> ${{ github.event.issue.number }}, Repo --> ${{ github.repository }}"
           fi
+        fi
 
-      - name: Output Project ID
-        run: |
-          echo "The project ID is: $PROJECT_ID"
+
+        - name: Output Project ID
+          run: |
+            echo "The project ID is: $PROJECT_ID"
