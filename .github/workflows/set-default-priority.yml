@@ -1,27 +1,28 @@
-name: Get Project ID on Issue Opened
+name: Example Workflow
 
 on:
   issues:
     types: [opened]
 
 jobs:
-  get-project-id:
+  example-job:
     runs-on: ubuntu-latest
     steps:
-      - name: Get Project ID
-        id: get_project_id
+      - name: Get Issue Events
+        id: get_events
         run: |
           response=$(curl -L \
             -H "Authorization: token ${{ secrets.MY_PAT }}" \
             -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/events)
+
+          echo "Response: $response"
           
-          # Sprawdzenie, czy są jakieś zdarzenia "added_to_project"
-          echo "$response" | jq '.[] | select(.event == "added_to_project")'
-
-          # Opcjonalnie, możesz zapisać wynik w zmiennej
           project_id=$(echo "$response" | jq -r '.[] | select(.event == "added_to_project") | .project_id')
-          echo "Project ID: $project_id"
 
-          # Użyj outputs, jeśli chcesz, aby były dostępne w kolejnych krokach
-          echo "::set-output name=project_id::$project_id"
+          if [ -z "$project_id" ]; then
+            echo "No project ID found."
+          else
+            echo "Project ID: $project_id"
+            echo "PROJECT_ID=$project_id" >> $GITHUB_ENV
+          fi
