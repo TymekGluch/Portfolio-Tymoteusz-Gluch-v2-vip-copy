@@ -9,19 +9,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-     - name: Get event
-       id: get_project_id
-       run: |
-        response=$(curl -s -o response.json -w "%{http_code}" \
-          -H "Accept: application/vnd.github+json" \
-          -H "Authorization: Bearer ${{ secrets.MY_PAT }}" \
-          -H "X-GitHub-Api-Version: 2022-11-28" \
-          https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/events)
+      - name: Get event
+        id: get_project_id
+        run: |
+          echo "Executing curl command..."
+          response=$(curl -s -o response.json -w "%{http_code}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.MY_PAT }}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/events)
         
-        echo "Response $response"
+          echo "Response code: $response"
 
-        - name: show response content
-          run: |
-          cat response.json
-
-  
+      - name: Show response content
+        run: |
+          cat response.json 
