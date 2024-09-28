@@ -1,35 +1,17 @@
-name: Auto Set Priority in Repository Project
+name: Set Priority
 
 on:
   issues:
     types: [opened]
-  pull_request:
-    types: [opened]
-
-permissions:
-  issues: write
-  contents: read
 
 jobs:
   set-priority:
     runs-on: ubuntu-latest
     steps:
-      - name: Get Repository Project Columns
-        id: get_columns
+      - name: Set Priority in Project
         run: |
-          REPO_PROJECT_ID=YOUR_REPO_PROJECT_ID  # Wstaw ID projektu repozytorium
-          curl -X GET \
+          curl -X PATCH \
             -H "Authorization: token ${{ secrets.MY_PAT }}" \
             -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/projects/${REPO_PROJECT_ID}/columns | jq -r '.[] | {id: .id, name: .name}'
-
-      - name: Set Priority in Repository Project
-        if: github.event.action == 'opened'
-        run: |
-          COLUMN_NAME="YOUR_COLUMN_NAME"  # Wstaw nazwę kolumny, gdzie chcesz dodać kartę
-          COLUMN_ID=$(echo "${{ steps.get_columns.outputs.result }}" | jq -r --arg name "$COLUMN_NAME" '.[] | select(.name == $name) | .id')
-          curl -X POST \
-            -H "Authorization: token ${{ secrets.MY_PAT }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/projects/columns/${COLUMN_ID}/cards \
-            -d '{"note": "Priority: Medium", "content_id": '${{ github.event.issue.id }}'}'
+            https://api.github.com/projects/columns/cards/${{ github.event.issue.number }} \
+            -d '{"content_id": '${{ github.event.issue.id }}', "note": "Priority: Medium"}'
