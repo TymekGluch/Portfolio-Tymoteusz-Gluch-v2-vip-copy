@@ -26,7 +26,7 @@ jobs:
             echo "PROJECT_ID=$project_id" >> $GITHUB_ENV
             echo "Project ID found: $project_id"  # Dodaj log, aby potwierdzić
           else
-            echo "No project ID found."
+            echo "No project ID found. issues --> ${{ github.event.issue.number }}"
           fi
 
       - name: Output Project ID
