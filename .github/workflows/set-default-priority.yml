@@ -14,10 +14,14 @@ jobs:
        run: |
         response=$(curl -s -o response.json -w "%{http_code}" \
           -H "Accept: application/vnd.github+json" \
-          -H "Authorization: Bearer token ${{ secrets.MY_PAT }}" \
+          -H "Authorization: Bearer ${{ secrets.MY_PAT }}" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
           https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/events)
         
         echo "Response $response"
+
+        - name: show response content
+          run: |
+          cat response.json
 
   
