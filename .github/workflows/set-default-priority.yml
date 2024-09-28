@@ -1,44 +1,27 @@
-name: Set Priority Label
+name: Get Project ID on Issue Opened
 
 on:
   issues:
     types: [opened]
 
 jobs:
-  set-label:
+  get-project-id:
     runs-on: ubuntu-latest
     steps:
-      - name: Get Project Columns
-        id: get_columns
+      - name: Get Project ID
+        id: get_project_id
         run: |
-          PROJECT_ID=1
-
-          curl -X GET \
+          response=$(curl -L \
             -H "Authorization: token ${{ secrets.MY_PAT }}" \
             -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/projects/${PROJECT_ID}/columns \
-            | jq -c '.[] | {id: .id, name: .name}' > columns.json
-
-      - name: Set Priority Label
-        id: set_label
-        run: |
-          LABEL=""
+            https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/events)
           
-          while IFS= read -r line; do
-            COLUMN_NAME=$(echo $line | jq -r '.name')
-            if [[ "$COLUMN_NAME" == "DistantFeature" ]]; then
-              LABEL="Priority: Low"
-            elif [[ "$COLUMN_NAME" == "Todo" ]]; then
-              LABEL="Priority: Medium"
-            fi
-          done < columns.json
+          # Sprawdzenie, czy są jakieś zdarzenia "added_to_project"
+          echo "$response" | jq '.[] | select(.event == "added_to_project")'
 
-          if [ -n "$LABEL" ]; then
-            curl -X POST \
-              -H "Authorization: token ${{ secrets.MY_PAT }}" \
-              -H "Accept: application/vnd.github.v3+json" \
-              https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels \
-              -d "[\"$LABEL\"]"
-          else
-            echo "No matching column found for setting label."
-          fi
+          # Opcjonalnie, możesz zapisać wynik w zmiennej
+          project_id=$(echo "$response" | jq -r '.[] | select(.event == "added_to_project") | .project_id')
+          echo "Project ID: $project_id"
+
+          # Użyj outputs, jeśli chcesz, aby były dostępne w kolejnych krokach
+          echo "::set-output name=project_id::$project_id"
