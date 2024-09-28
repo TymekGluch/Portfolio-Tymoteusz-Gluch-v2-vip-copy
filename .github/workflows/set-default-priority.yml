@@ -1,16 +1,22 @@
-name: Set default priority
+name: Auto Set Priority Label
 
 on:
   issues:
     types: [opened]
+  pull_request:
+    types: [opened]
+
+permissions:
+  issues: write 
 
 jobs:
-  set-priority:
+  set-label:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Set default priority label
+    - name: Auto-assign Priority label
+      if: github.event.action == 'opened'
       run: |
+        # Dodaj etykietę do nowego issue lub pull requestu
         curl -X POST \
           -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           -H "Accept: application/vnd.github.v3+json" \
