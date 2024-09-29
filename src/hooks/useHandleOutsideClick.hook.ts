@@ -15,13 +15,8 @@ const useHandleOutsideClick = (
       })
 
       if (shouldReturn) {
-        console.log('shouldreturn')
-
         return
       }
-
-      console.log('callback')
-
       handler(event);
     };
 

@@ -1,4 +1,3 @@
-import React from "react";
 import {
   ITEM_VISIBILITY_DEVICE,
   navigationLinks,
@@ -10,15 +9,20 @@ import MoonIcon from "../../assets/icons/moon.svg?react";
 import SunIcon from "../../assets/icons/sun.svg?react";
 import { useSearchParams } from "react-router-dom";
 import { Link } from "../Link";
-import { COLOR_VARIANT } from "../../constants";
-import { useHandleOutsideClick } from "../../hooks";
+import { COLOR_VARIANT, THEME_MODE } from "../../constants";
+import { useHandleOutsideClick, useTheme } from "../../hooks";
+import React from "react";
 
 const MainNavigation = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState<boolean>(false);
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const { themeModeByDefault } = useTheme();
+
   const listRef = React.useRef<HTMLUListElement | null>(null);
   const buttonRef = React.useRef<HTMLButtonElement | null>(null);
+
+  const isLightTheme = themeModeByDefault === THEME_MODE.LIGHT;
 
   useHandleOutsideClick([listRef, buttonRef], () => {
     if (isMenuOpen) {
@@ -28,7 +32,6 @@ const MainNavigation = () => {
     }
   });
 
-  const isThemeParamExist = Boolean(localStorage.getItem("theme"));
   const menuButtonDescription = isMenuOpen ? "close menu" : "open menu";
 
   const handleMenu = () => {
@@ -58,7 +61,7 @@ const MainNavigation = () => {
 
     setSearchParams(searchParams);
 
-    localStorage.removeItem("theme");
+    localStorage.setItem("theme", "dark");
   };
 
   return (
@@ -156,7 +159,7 @@ const MainNavigation = () => {
                 triggeredText="light"
                 className="mt-3 lg:m-0"
                 onChange={handleThemeChange}
-                defaultChecked={isThemeParamExist}
+                defaultChecked={isLightTheme}
               />
             </li>
           </ul>
