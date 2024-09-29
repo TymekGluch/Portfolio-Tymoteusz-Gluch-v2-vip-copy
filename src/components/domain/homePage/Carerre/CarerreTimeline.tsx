@@ -19,6 +19,7 @@ import { twMerge } from "tailwind-merge";
 import { useIsMobile } from "../../../../hooks";
 import { CarerreItemHeader } from "./components/CarerreItemHeader";
 import { CarerreItemTimeline } from "./components/CarerreItemTimeline";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
 type CarerreTimelineProps = {
   headingComponent?: ValueOf<typeof CARERRE_HEADING_VARIANT>;
@@ -136,8 +137,10 @@ const CarerreTimeline = ({
                             />
 
                             {!isMobile && (
-                              <div className="flex justify-center items-center h-full col-span-7 ml-5">
-                                {carerrePeriodDescription}
+                              <div className="flex flex-col justify-start items-center h-full col-span-7 ml-5">
+                                {documentToReactComponents(
+                                  carerrePeriodDescription
+                                )}
                               </div>
                             )}
                           </>
