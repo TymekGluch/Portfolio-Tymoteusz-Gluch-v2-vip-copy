@@ -8,11 +8,19 @@ type ThemeReturnType = {
     themeModeByDefault: ValueOf<typeof THEME_MODE>;
 }
 
+type ThemeStateType = {
+    isDarkTheme: boolean;
+    isDefaultDarkTheme: boolean;
+}
+
+const defultThemeState: ThemeStateType = {
+    isDarkTheme: false,
+    isDefaultDarkTheme: false
+}
+
 const useTheme = (): ThemeReturnType => {
     const [searchParams] = useSearchParams();
-
-    const [isDarkTheme, setIsDarkTheme] = React.useState<boolean>(false);
-    const [isDefaultDarkTheme, setIsDefaultDarkTheme] = React.useState<boolean>(false);
+    const [theme, setTheme] = React.useState<ThemeStateType>(defultThemeState);
 
     const renderCounter = React.useRef<number>(0);
 
@@ -23,19 +31,22 @@ const useTheme = (): ThemeReturnType => {
             && window.matchMedia("(prefers-color-scheme: dark)").matches
         )
 
-        if (renderCounter.current < 2) {
-            setIsDefaultDarkTheme(isDarkTheme ? true : false);
+        if (renderCounter.current < 1) {
+            setTheme({
+                isDarkTheme,
+                isDefaultDarkTheme: isDarkTheme
+            });
         }
 
-        setIsDarkTheme(isDarkTheme ? true : false);
+        setTheme((prev) => ({...prev, isDarkTheme}));
 
         renderCounter.current += 1;    
     }, [searchParams])
 
 
     return {
-        themeMode: isDarkTheme ? THEME_MODE.DARK : THEME_MODE.LIGHT,
-        themeModeByDefault: isDefaultDarkTheme ? THEME_MODE.DARK : THEME_MODE.LIGHT
+        themeMode: theme.isDarkTheme ? THEME_MODE.DARK : THEME_MODE.LIGHT,
+        themeModeByDefault: theme.isDefaultDarkTheme ? THEME_MODE.DARK : THEME_MODE.LIGHT
     }
 }
 
