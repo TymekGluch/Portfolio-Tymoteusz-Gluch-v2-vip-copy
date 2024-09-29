@@ -6,20 +6,34 @@ import { useSearchParams } from "react-router-dom";
 type LayoutProps = React.PropsWithChildren;
 
 const Layout = ({ children }: LayoutProps) => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const themeQueryParam = searchParams.get("theme");
 
   React.useLayoutEffect(() => {
-    if (
+    const isDarkTheme =
       localStorage.theme === "dark" ||
       (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
+        window.matchMedia("(prefers-color-scheme: dark)").matches);
+
+    if (isDarkTheme) {
       document.documentElement.classList.add("dark");
+
+      searchParams.set("theme", "dark");
+
+      setSearchParams(searchParams);
+
+      localStorage.setItem("theme", "dark");
     } else {
       document.documentElement.classList.remove("dark");
+
+      searchParams.set("theme", "light");
+
+      setSearchParams(searchParams);
+
+      localStorage.setItem("theme", "light");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [themeQueryParam]);
 
   return (

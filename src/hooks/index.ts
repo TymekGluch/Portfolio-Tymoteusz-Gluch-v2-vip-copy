@@ -1,2 +1,3 @@
-export * from './useHandleOutsideClick';
-export * from './useIsMobile'
+export * from './useHandleOutsideClick.hook';
+export * from './useIsMobile.hook'
+export { useTheme } from './useTheme.hook'
