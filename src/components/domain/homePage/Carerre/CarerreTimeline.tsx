@@ -69,7 +69,8 @@ const CarerreTimeline = ({
                   startDate,
                   finishDate,
                   shortDescription,
-                  carerrePeriodDescription,
+                  description,
+                  technologiesStack,
                 },
                 index,
                 array
@@ -137,7 +138,13 @@ const CarerreTimeline = ({
 
                             {!isMobile && (
                               <div className="flex justify-center items-center h-full col-span-7 ml-5">
-                                {carerrePeriodDescription}
+                                {description}
+
+                                <ul>
+                                  {technologiesStack.map((techItem) => (
+                                    <li key={techItem}>{techItem}</li>
+                                  ))}
+                                </ul>
                               </div>
                             )}
                           </>
