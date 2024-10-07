@@ -73,7 +73,8 @@ const CarerreTimeline = ({
                   startDate,
                   finishDate,
                   shortDescription,
-                  carerrePeriodDescription,
+                  description,
+                  technologiesStack,
                 },
                 index,
                 array
@@ -140,12 +141,24 @@ const CarerreTimeline = ({
                             />
 
                             {!isMobile && (
+<<<<<<< HEAD
                               <RichTextReader
                                 richText={carerrePeriodDescription}
                                 hedingComponent={getNextAllowedHeadingTag(
                                   headingComponent
                                 )}
                               />
+=======
+                              <div className="flex justify-center items-center h-full col-span-7 ml-5">
+                                {description}
+
+                                <ul>
+                                  {technologiesStack.map((techItem) => (
+                                    <li key={techItem}>{techItem}</li>
+                                  ))}
+                                </ul>
+                              </div>
+>>>>>>> origin/master
                             )}
                           </>
                         )}

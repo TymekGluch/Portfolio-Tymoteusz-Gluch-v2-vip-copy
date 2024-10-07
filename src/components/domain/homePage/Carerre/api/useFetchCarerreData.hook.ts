@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
 import { generateAssetQuery, generateEntryQuery } from "../../../../../utilities"
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
 type EntrySingularCarerreReferenceType = {
     sys: {
@@ -16,8 +15,6 @@ type EntryFieldDataType = {
     }
 }
 
-export type DokumentType = React.ComponentProps<typeof documentToReactComponents>;
-
 type SingularCarereEntryType = {
     fields: {
         title: string;
@@ -29,19 +26,14 @@ type SingularCarereEntryType = {
                 id: string;
             }
         } | null,
-        carerrePeriodDescription: DokumentType
+        description: string;
+        technologiesStack: string[];
     },
 }
 
+type ResolvedSingularCarrereEntryType = Omit<SingularCarereEntryType['fields'], 'image'>
 
-type DataType = {
-    title: string;
-    shortDescription: string | null;
-    startDate: string;
-    finishDate: string | null
-    image: string | null;
-    carerrePeriodDescription: DokumentType;
-}
+type DataType = { image: string | null } & ResolvedSingularCarrereEntryType
 
 type CarerreDataReturnType = {
     isLoading: boolean,
@@ -105,7 +97,7 @@ const useFetchCarerreData = (): CarerreDataReturnType => {
 
                 return isAssetExist 
                     ? {...currentFields, image: imagesData && typeof resolvedIndexOfAsset === 'number' && imagesData[resolvedIndexOfAsset]?.fields?.file?.url}
-                    : currentFields
+                    : {...currentFields}
             }) 
     
     return { isLoading, isError, data }
