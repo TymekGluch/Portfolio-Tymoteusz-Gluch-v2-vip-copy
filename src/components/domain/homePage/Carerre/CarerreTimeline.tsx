@@ -1,10 +1,13 @@
-import { BG_COLORS_CLASSES, COLOR_VARIANT } from "../../../../constants";
+import {
+  ALLOWED_HEADING_TAGS,
+  BG_COLORS_CLASSES,
+  COLOR_VARIANT,
+} from "../../../../constants";
 import { ContentProgress } from "../../../Progress";
 import { PROGRESS_STATUS } from "../../../Progress/Progress.constants";
 import { useFetchCarerreData } from "./api/useFetchCarerreData.hook";
 import { ValueOf } from "../../../../types/utiles";
 import {
-  CARERRE_HEADING_VARIANT,
   CARERRE_TIMELINE_VARIANT,
   opacityArray,
 } from "./CarerreTimeline.constants";
@@ -19,17 +22,17 @@ import { twMerge } from "tailwind-merge";
 import { useIsMobile } from "../../../../hooks";
 import { CarerreItemHeader } from "./components/CarerreItemHeader";
 import { CarerreItemTimeline } from "./components/CarerreItemTimeline";
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import { getNextAllowedHeadingTag } from "../../../../utilities";
 
 type CarerreTimelineProps = {
-  headingComponent?: ValueOf<typeof CARERRE_HEADING_VARIANT>;
+  headingComponent?: ValueOf<typeof ALLOWED_HEADING_TAGS>;
   variant?: ValueOf<typeof CARERRE_TIMELINE_VARIANT>;
   colorVariant?: ValueOf<typeof COLOR_VARIANT>;
   primaryColorVariant?: ValueOf<typeof COLOR_VARIANT>;
 };
 
 const CarerreTimeline = ({
-  headingComponent = CARERRE_HEADING_VARIANT.H2,
+  headingComponent = ALLOWED_HEADING_TAGS.H2,
   colorVariant = COLOR_VARIANT.DEFAULT,
   primaryColorVariant = COLOR_VARIANT.DEFAULT,
   variant = CARERRE_TIMELINE_VARIANT.CIRCLE,
@@ -137,11 +140,12 @@ const CarerreTimeline = ({
                             />
 
                             {!isMobile && (
-                              <div className="flex flex-col justify-start items-center h-full col-span-7 ml-5">
-                                {documentToReactComponents(
-                                  carerrePeriodDescription
+                              <RichTextReader
+                                richText={carerrePeriodDescription}
+                                hedingComponent={getNextAllowedHeadingTag(
+                                  headingComponent
                                 )}
-                              </div>
+                              />
                             )}
                           </>
                         )}
