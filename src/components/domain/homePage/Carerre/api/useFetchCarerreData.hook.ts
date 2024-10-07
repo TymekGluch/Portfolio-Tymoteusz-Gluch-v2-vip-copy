@@ -15,19 +15,6 @@ type EntryFieldDataType = {
     }
 }
 
-
-type InsideContentType = {
-    value: string;
-}
-
-type ContentType = {
-    content: InsideContentType[]
-}
-
-type CarerreRichTextPeriodDescriptionType = {
-    content: ContentType[]
-}
-
 type SingularCarereEntryType = {
     fields: {
         title: string;
@@ -39,18 +26,14 @@ type SingularCarereEntryType = {
                 id: string;
             }
         } | null,
-        carerrePeriodDescription: CarerreRichTextPeriodDescriptionType;
+        description: string;
+        technologiesStack: string[];
     },
 }
 
-type DataType = {
-    title: string;
-    shortDescription: string | null;
-    startDate: string;
-    finishDate: string | null
-    image: string | null;
-    carerrePeriodDescription: string;
-}
+type ResolvedSingularCarrereEntryType = Omit<SingularCarereEntryType['fields'], 'image'>
+
+type DataType = { image: string | null } & ResolvedSingularCarrereEntryType
 
 type CarerreDataReturnType = {
     isLoading: boolean,
@@ -111,11 +94,10 @@ const useFetchCarerreData = (): CarerreDataReturnType => {
                 const isAssetExist = typeof filteredAssetsReferenceIndexesArray.find((current) => current === index) === 'number'
                 const indexOfAsset = filteredAssetsReferenceIndexesArray.findIndex((current) => current === index)
                 const resolvedIndexOfAsset = indexOfAsset !== -1 && indexOfAsset
-                const resolvedPeriodDescription = currentFields?.carerrePeriodDescription.content[0].content[0].value
 
                 return isAssetExist 
-                    ? {...currentFields, image: imagesData && typeof resolvedIndexOfAsset === 'number' && imagesData[resolvedIndexOfAsset]?.fields?.file?.url, carerrePeriodDescription: resolvedPeriodDescription}
-                    : {...currentFields, carerrePeriodDescription: resolvedPeriodDescription}
+                    ? {...currentFields, image: imagesData && typeof resolvedIndexOfAsset === 'number' && imagesData[resolvedIndexOfAsset]?.fields?.file?.url}
+                    : {...currentFields}
             }) 
     
     return { isLoading, isError, data }
