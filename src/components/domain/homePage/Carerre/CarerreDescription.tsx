@@ -40,7 +40,7 @@ const CarerreDescription = ({
           {technologiesStack.map((TechnologiesItem) => (
             <Badge
               key={TechnologiesItem}
-              colorVariant={COLOR_VARIANT.TERTIARY}
+              colorVariant={COLOR_VARIANT.PRIMARY}
               as={ALLOWED_BADGE_COMPONENT.LI}
               isSquareShape
               forceDefaultBG={isDarkMode}>
