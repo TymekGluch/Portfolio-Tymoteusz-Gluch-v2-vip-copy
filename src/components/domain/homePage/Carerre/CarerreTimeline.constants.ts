@@ -1,11 +1,3 @@
-const CARERRE_HEADING_VARIANT = {
-H1: 'h1',
-H2: 'h2',
-H3: 'h3',
-H4: 'h4',
-H5: 'h5',
-} as const;
-
 const opacityArray = [
     'opacity-15',
     'opacity-30',
@@ -25,4 +17,4 @@ const CARERRE_TIMELINE_VARIANT = {
     CIRCLE: 'circle'
 } as const
 
-export { CARERRE_HEADING_VARIANT, CARERRE_TIMELINE_VARIANT, opacityArray }
+export {  CARERRE_TIMELINE_VARIANT, opacityArray }

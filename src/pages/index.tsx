@@ -11,7 +11,7 @@ import UserIcon from "../assets/icons/user.svg?react";
 import BriefcaseIcon from "../assets/icons/briefcase.svg?react";
 import PaintBrushIcon from "../assets/icons/paintBrush.svg?react";
 import EnvelopeIcon from "../assets/icons/envelopeOpen.svg?react";
-import { COLOR_VARIANT } from "../constants";
+import { ALLOWED_HEADING_TAGS, COLOR_VARIANT } from "../constants";
 import { CarerreTimeline } from "../components/domain/homePage/Carerre";
 import { CARERRE_TIMELINE_VARIANT } from "../components/domain/homePage/Carerre/CarerreTimeline.constants";
 import { useIsMobile } from "../hooks";
@@ -48,6 +48,7 @@ const HomePage = () => {
         sectionComponent={SECTION_COMPONENT.SECTION}>
         <CarerreTimeline
           colorVariant={COLOR_VARIANT.TERTIARY}
+          headingComponent={ALLOWED_HEADING_TAGS.H3}
           variant={carerreVariant}
           primaryColorVariant={COLOR_VARIANT.PRIMARY}
         />

@@ -87,7 +87,7 @@ const useFetchCarerreData = (): CarerreDataReturnType => {
     const isLoading = isAssetLoading || singularEntriesIsLoading || referenceIsLoading
     const isError = isAssetError || singularEntriesIsError || referenceIsError
 
-    const data: DataType[] | null = singularCarerreData 
+    const data = singularCarerreData 
         && singularCarerreData
             ?.map((objectWithField) => objectWithField.fields)
             ?.map((currentFields, index) => {
