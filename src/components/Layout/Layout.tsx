@@ -38,7 +38,7 @@ const Layout = ({ children }: LayoutProps) => {
 
   return (
     <main className="flex justify-center align-middle w-screen min-h-screen lg:px-4">
-      <div className="flex flex-col justify-end lg:justify-between align-middle gap-4 w-full max-w-screen-2xl min-h-screen border-solid border-px border-textColor-primary">
+      <div className="flex flex-col justify-end lg:justify-between align-middle gap-4 w-full max-w-[105rem] min-h-screen border-solid border-px border-textColor-primary">
         <MainNavigation />
 
         <div className="lg:grid grid-cols-12 gap-4">

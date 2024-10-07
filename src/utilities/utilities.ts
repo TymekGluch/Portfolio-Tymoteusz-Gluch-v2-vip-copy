@@ -11,7 +11,7 @@ const allowedKeys: AllowedKeyType[] = Object.keys(ALLOWED_HEADING_TAGS) as Allow
 const allowedTags: AllowedTagType[] = Object.values(ALLOWED_HEADING_TAGS)
 
 const getNextAllowedHeadingKeyTag = (currentHeadingTag: AllowedTagType): AllowedKeyType  => {
-  const resolvedKeyIndex = allowedTags.indexOf(currentHeadingTag) - 1
+  const resolvedKeyIndex = allowedTags.indexOf(currentHeadingTag) + 1
   const lastKey = allowedKeys.find((_, index, array) => index === array.length - 1)
 
   return allowedKeys[resolvedKeyIndex] ?? lastKey 

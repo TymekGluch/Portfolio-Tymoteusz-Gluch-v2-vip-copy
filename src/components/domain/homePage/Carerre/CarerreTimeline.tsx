@@ -1,28 +1,28 @@
+import React from "react";
+import { twMerge } from "tailwind-merge";
+import { v4 as uuid } from "uuid";
 import {
   ALLOWED_HEADING_TAGS,
   BG_COLORS_CLASSES,
   COLOR_VARIANT,
 } from "../../../../constants";
+import { useIsMobile } from "../../../../hooks";
+import { ValueOf } from "../../../../types/utiles";
 import { ContentProgress } from "../../../Progress";
 import { PROGRESS_STATUS } from "../../../Progress/Progress.constants";
 import { useFetchCarerreData } from "./api/useFetchCarerreData.hook";
-import { ValueOf } from "../../../../types/utiles";
+import { CarerreDescription } from "./CarerreDescription";
 import {
   CARERRE_TIMELINE_VARIANT,
   opacityArray,
 } from "./CarerreTimeline.constants";
-import React from "react";
 import {
   getResolvedYYYYMonthNameFormat,
   getTimeDifferenceFullFormated,
   getTimeDifferenceInMonth,
 } from "./CarerreTimeline.utilities";
-import { v4 as uuid } from "uuid";
-import { twMerge } from "tailwind-merge";
-import { useIsMobile } from "../../../../hooks";
 import { CarerreItemHeader } from "./components/CarerreItemHeader";
 import { CarerreItemTimeline } from "./components/CarerreItemTimeline";
-import { getNextAllowedHeadingTag } from "../../../../utilities";
 
 type CarerreTimelineProps = {
   headingComponent?: ValueOf<typeof ALLOWED_HEADING_TAGS>;
@@ -141,24 +141,11 @@ const CarerreTimeline = ({
                             />
 
                             {!isMobile && (
-<<<<<<< HEAD
-                              <RichTextReader
-                                richText={carerrePeriodDescription}
-                                hedingComponent={getNextAllowedHeadingTag(
-                                  headingComponent
-                                )}
+                              <CarerreDescription
+                                headingComponent={headingComponent}
+                                description={description}
+                                technologiesStack={technologiesStack}
                               />
-=======
-                              <div className="flex justify-center items-center h-full col-span-7 ml-5">
-                                {description}
-
-                                <ul>
-                                  {technologiesStack.map((techItem) => (
-                                    <li key={techItem}>{techItem}</li>
-                                  ))}
-                                </ul>
-                              </div>
->>>>>>> origin/master
                             )}
                           </>
                         )}

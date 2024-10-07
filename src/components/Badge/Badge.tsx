@@ -1,17 +1,41 @@
 import type React from "react";
-import type { COLOR_VARIANT } from "../../constants";
+import {
+  BG_COLORS_CLASSES,
+  COLOR_VARIANT,
+  TEXT_COLORS_CLASSES,
+} from "../../constants";
 import type { ValueOf } from "../../types/utiles";
-import type { ALLOWED_BADGE_COMPONENT } from "./Badge.constants";
+import { ALLOWED_BADGE_COMPONENT } from "./Badge.constants";
+import { twMerge } from "tailwind-merge";
 
 type BadgeProps = React.PropsWithChildren<{
   colorVariant?: ValueOf<typeof COLOR_VARIANT>;
-  component: ValueOf<typeof ALLOWED_BADGE_COMPONENT>;
+  as?: ValueOf<typeof ALLOWED_BADGE_COMPONENT>;
+  isSquareShape?: boolean;
+  forceDefaultBG?: boolean;
 }>;
 
-const Badge = ({ colorVariant, component, children }: BadgeProps) => {
-  const BadgeComponent = component;
+const Badge = ({
+  colorVariant = COLOR_VARIANT.DEFAULT,
+  as = ALLOWED_BADGE_COMPONENT.SPAN,
+  children,
+  isSquareShape = false,
+  forceDefaultBG = false,
+}: BadgeProps) => {
+  const BadgeComponent = as;
 
-  return <BadgeComponent>{children}</BadgeComponent>;
+  return (
+    <BadgeComponent
+      className={twMerge(
+        BG_COLORS_CLASSES?.[colorVariant],
+        TEXT_COLORS_CLASSES?.[colorVariant],
+        "flex bg-opacity-10 border-solid px-2 py-1 text-[0.750rem] font-bold whitespace-nowrap w-fit h-fit",
+        !isSquareShape && "rounded-3xl",
+        forceDefaultBG && BG_COLORS_CLASSES.DEFAULT
+      )}>
+      {children}
+    </BadgeComponent>
+  );
 };
 
 export { Badge };
