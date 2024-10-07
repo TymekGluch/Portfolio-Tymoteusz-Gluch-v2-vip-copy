@@ -1,7 +1,9 @@
 import {
   COLOR_VARIANT,
+  THEME_MODE,
   type ALLOWED_HEADING_TAGS,
 } from "../../../../constants";
+import { useTheme } from "../../../../hooks";
 import type { ValueOf } from "../../../../types/utiles";
 import { getNextAllowedHeadingTag } from "../../../../utilities";
 import { Badge } from "../../../Badge/Badge";
@@ -18,6 +20,9 @@ const CarerreDescription = ({
   description,
   headingComponent,
 }: CarerreDescriptionProps) => {
+  const { themeMode } = useTheme();
+
+  const isDarkMode = themeMode === THEME_MODE.DARK;
   const JobDescriptionHeading = getNextAllowedHeadingTag(headingComponent);
 
   return (
@@ -35,10 +40,10 @@ const CarerreDescription = ({
           {technologiesStack.map((TechnologiesItem) => (
             <Badge
               key={TechnologiesItem}
-              colorVariant={COLOR_VARIANT.TERTIARY}
+              colorVariant={COLOR_VARIANT.PRIMARY}
               as={ALLOWED_BADGE_COMPONENT.LI}
               isSquareShape
-              forceDefaultBG>
+              forceDefaultBG={isDarkMode}>
               {TechnologiesItem}
             </Badge>
           ))}
