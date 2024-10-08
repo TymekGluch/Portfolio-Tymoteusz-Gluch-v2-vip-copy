@@ -53,4 +53,4 @@ const CarerreDescription = ({
   );
 };
 
-export { CarerreDescription };
+export default CarerreDescription;

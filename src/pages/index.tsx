@@ -20,7 +20,7 @@ const HomePage = () => {
   const { heading: aboutMeHeading, isLoading } = useFetchAboutMeData();
   const isMobile = useIsMobile();
 
-  const carerreVariant = !isMobile
+  const carerreVariant = isMobile
     ? CARERRE_TIMELINE_VARIANT.SQUERE
     : CARERRE_TIMELINE_VARIANT.CIRCLE;
 

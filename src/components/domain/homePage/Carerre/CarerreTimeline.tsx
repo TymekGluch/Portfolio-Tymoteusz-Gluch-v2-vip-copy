@@ -1,21 +1,9 @@
 import React from "react";
-import { twMerge } from "tailwind-merge";
-import { v4 as uuid } from "uuid";
-import {
-  ALLOWED_HEADING_TAGS,
-  BG_COLORS_CLASSES,
-  COLOR_VARIANT,
-} from "../../../../constants";
+import { ALLOWED_HEADING_TAGS, COLOR_VARIANT } from "../../../../constants";
 import { useIsMobile } from "../../../../hooks";
 import { ValueOf } from "../../../../types/utiles";
-import { ContentProgress } from "../../../Progress";
-import { PROGRESS_STATUS } from "../../../Progress/Progress.constants";
 import { useFetchCarerreData } from "./api/useFetchCarerreData.hook";
-import { CarerreDescription } from "./CarerreDescription";
-import {
-  CARERRE_TIMELINE_VARIANT,
-  opacityArray,
-} from "./CarerreTimeline.constants";
+import { CARERRE_TIMELINE_VARIANT } from "./CarerreTimeline.constants";
 import {
   getResolvedYYYYMonthNameFormat,
   getTimeDifferenceFullFormated,
@@ -23,6 +11,8 @@ import {
 } from "./CarerreTimeline.utilities";
 import { CarerreItemHeader } from "./components/CarerreItemHeader";
 import { CarerreItemTimeline } from "./components/CarerreItemTimeline";
+import { CarerreSeparator } from "./components/CarerreSeparator";
+import { CarerreSkeleton } from "./components/CarerreSkeleton";
 
 type CarerreTimelineProps = {
   headingComponent?: ValueOf<typeof ALLOWED_HEADING_TAGS>;
@@ -30,6 +20,8 @@ type CarerreTimelineProps = {
   colorVariant?: ValueOf<typeof COLOR_VARIANT>;
   primaryColorVariant?: ValueOf<typeof COLOR_VARIANT>;
 };
+
+const CarerreDescription = React.lazy(() => import("./CarerreDescription"));
 
 const CarerreTimeline = ({
   headingComponent = ALLOWED_HEADING_TAGS.H2,
@@ -43,24 +35,7 @@ const CarerreTimeline = ({
   return (
     <ul className="flex flex-col justify-center items-center gap-4 w-full">
       {isError || isLoading ? (
-        <div className="flex flex-col gap-4 w-1/2">
-          {Array.from({ length: 6 }, () => (
-            <li key={uuid()}>
-              {isError ? (
-                <ContentProgress
-                  status={PROGRESS_STATUS.ERROR}
-                  sizeClass="w-full h-8 rounded-full"
-                />
-              ) : (
-                <ContentProgress
-                  color={colorVariant}
-                  status={PROGRESS_STATUS.LOADING}
-                  sizeClass="w-full h-8 rounded-sm"
-                />
-              )}
-            </li>
-          ))}
-        </div>
+        <CarerreSkeleton isError={isError} colorVariant={colorVariant} />
       ) : (
         <>
           {data
@@ -140,47 +115,29 @@ const CarerreTimeline = ({
                               primaryColorVarint={primaryColorVariant}
                             />
 
-                            {!isMobile && (
+                            <React.Suspense
+                              fallback={
+                                <p className="flex justify-center items-center w-full h-full">
+                                  loading ...
+                                </p>
+                              }>
                               <CarerreDescription
                                 headingComponent={headingComponent}
                                 description={description}
                                 technologiesStack={technologiesStack}
                               />
-                            )}
+                            </React.Suspense>
                           </>
                         )}
                       </section>
                     </li>
 
                     {!isLastElement && (
-                      <li
-                        className={twMerge(
-                          "flex justify-center items-center gap-3 w-full xl:gap-5",
-                          !isMobile && "my-4"
-                        )}>
-                        {Array.from({ length: isMobile ? 11 : 22 }).map(
-                          (_, index) => {
-                            const resolvedIndex = !isMobile
-                              ? Math.floor(index / 2)
-                              : index;
-                            const resolvedOpacityClass =
-                              opacityArray[resolvedIndex];
-
-                            return (
-                              <div
-                                key={uuid()}
-                                className={twMerge(
-                                  "block w-2 h-2",
-                                  BG_COLORS_CLASSES?.[colorVariant],
-                                  resolvedOpacityClass,
-                                  variant === CARERRE_TIMELINE_VARIANT.CIRCLE &&
-                                    "rounded-full"
-                                )}
-                              />
-                            );
-                          }
-                        )}
-                      </li>
+                      <CarerreSeparator
+                        isMobile={isMobile}
+                        variant={variant}
+                        colorVariant={colorVariant}
+                      />
                     )}
                   </React.Fragment>
                 );
