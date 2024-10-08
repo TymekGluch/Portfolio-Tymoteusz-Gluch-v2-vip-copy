@@ -44,8 +44,7 @@ const AboutMe = ({ colorVariant = COLOR_VARIANT.DEFAULT }: AboutMeProps) => {
               "min-w-48 h-48 object-cover rounded-full border-4 border-dashed",
               BORDER_COLORS_CLASSES?.[colorVariant]
             )}
-            width={3468}
-            height={4624}
+            loading="eager"
             src={avatarSorce}
             alt={avatarAlt}
           />
