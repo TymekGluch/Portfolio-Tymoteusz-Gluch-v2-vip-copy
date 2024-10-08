@@ -30,7 +30,7 @@ const HomePage = () => {
         id="about-me"
         heading={isLoading ? "loading..." : aboutMeHeading}
         sectionIcon={<UserIcon />}
-        sectionComponent={SECTION_COMPONENT.HEADER}>
+        as={SECTION_COMPONENT.HEADER}>
         <AboutMe />
       </Section>
 
@@ -45,7 +45,7 @@ const HomePage = () => {
         heading="Careere"
         sectionIcon={<BriefcaseIcon />}
         colorVariant={COLOR_VARIANT.TERTIARY}
-        sectionComponent={SECTION_COMPONENT.SECTION}>
+        as={SECTION_COMPONENT.SECTION}>
         <CarerreTimeline
           colorVariant={COLOR_VARIANT.TERTIARY}
           headingComponent={ALLOWED_HEADING_TAGS.H3}
@@ -59,14 +59,14 @@ const HomePage = () => {
         heading="My projects"
         sectionIcon={<PaintBrushIcon />}
         colorVariant={COLOR_VARIANT.SECONDARY}
-        sectionComponent={SECTION_COMPONENT.SECTION}
+        as={SECTION_COMPONENT.SECTION}
       />
 
       <Section
         id="contact"
         heading="contact"
         sectionIcon={<EnvelopeIcon />}
-        sectionComponent={SECTION_COMPONENT.SECTION}
+        as={SECTION_COMPONENT.SECTION}
       />
     </>
   );

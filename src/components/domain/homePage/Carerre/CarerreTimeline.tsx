@@ -21,7 +21,9 @@ type CarerreTimelineProps = {
   primaryColorVariant?: ValueOf<typeof COLOR_VARIANT>;
 };
 
-const CarerreDescription = React.lazy(() => import("./CarerreDescription"));
+const CarerreDescription = React.lazy(
+  () => import("./components/CarerreDescription")
+);
 
 const CarerreTimeline = ({
   headingComponent = ALLOWED_HEADING_TAGS.H2,

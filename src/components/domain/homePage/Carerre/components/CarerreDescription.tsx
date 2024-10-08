@@ -2,12 +2,12 @@ import {
   COLOR_VARIANT,
   THEME_MODE,
   type ALLOWED_HEADING_TAGS,
-} from "../../../../constants";
-import { useTheme } from "../../../../hooks";
-import type { ValueOf } from "../../../../types/utiles";
-import { getNextAllowedHeadingTag } from "../../../../utilities";
-import { Badge } from "../../../Badge/Badge";
-import { ALLOWED_BADGE_COMPONENT } from "../../../Badge/Badge.constants";
+} from "../../../../../constants";
+import { useTheme } from "../../../../../hooks";
+import type { ValueOf } from "../../../../../types/utiles";
+import { getNextAllowedHeadingTag } from "../../../../../utilities";
+import { Badge } from "../../../../Badge/Badge";
+import { ALLOWED_BADGE_COMPONENT } from "../../../../Badge/Badge.constants";
 
 type CarerreDescriptionProps = {
   technologiesStack: string[];
