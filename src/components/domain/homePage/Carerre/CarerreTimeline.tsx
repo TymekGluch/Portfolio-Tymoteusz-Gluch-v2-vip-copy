@@ -13,6 +13,13 @@ import { CarerreItemHeader } from "./components/CarerreItemHeader";
 import { CarerreItemTimeline } from "./components/CarerreItemTimeline";
 import { CarerreSeparator } from "./components/CarerreSeparator";
 import { CarerreSkeleton } from "./components/CarerreSkeleton";
+import LazyButton from "../../../Button";
+import {
+  BUTTON_SIZES,
+  BUTTON_VARIANTS,
+} from "../../../Button/Button.constants";
+import ButtonIcon from "../../../../assets/icons/info.svg?react";
+import ButtonAcitveIcon from "../../../../assets/icons/return.svg?react";
 
 type CarerreTimelineProps = {
   headingComponent?: ValueOf<typeof ALLOWED_HEADING_TAGS>;
@@ -31,6 +38,10 @@ const CarerreTimeline = ({
   primaryColorVariant = COLOR_VARIANT.DEFAULT,
   variant = CARERRE_TIMELINE_VARIANT.CIRCLE,
 }: CarerreTimelineProps) => {
+  const [renderDetailsArray, setRenderDetailsArray] = React.useState<boolean[]>(
+    []
+  );
+
   const { data, isLoading, isError } = useFetchCarerreData();
   const isMobile = useIsMobile();
 
@@ -73,29 +84,43 @@ const CarerreTimeline = ({
                   getTimeDifferenceFullFormated(differenceInMonth);
                 const periodSummary = `{${differenceInYearAndMonth}ds}`;
 
+                const shouldRenderDetails = renderDetailsArray[index];
+
                 return (
                   <React.Fragment key={title}>
-                    <li className="w-full">
+                    <li className="flex flex-col items-center gap-8 w-full">
                       <section className="flex lg:grid lg:grid-cols-12 flex-col justify-center items-center gap-1 w-full h-fit">
                         {isMobile ? (
                           <>
-                            <CarerreItemHeader
-                              periodSummary={periodSummary}
-                              primaryColorVarint={primaryColorVariant}
-                              headingTag={headingComponent}
-                              index={index}
-                              title={title}
-                              shortDescription={shortDescription}
-                              imageSrc={imageSrc}
-                            />
+                            {shouldRenderDetails ? (
+                              <React.Suspense>
+                                <CarerreDescription
+                                  headingComponent={headingComponent}
+                                  description={description}
+                                  technologiesStack={technologiesStack}
+                                />
+                              </React.Suspense>
+                            ) : (
+                              <>
+                                <CarerreItemHeader
+                                  periodSummary={periodSummary}
+                                  primaryColorVarint={primaryColorVariant}
+                                  headingTag={headingComponent}
+                                  index={index}
+                                  title={title}
+                                  shortDescription={shortDescription}
+                                  imageSrc={imageSrc}
+                                />
 
-                            <CarerreItemTimeline
-                              startDate={resolvedStartDate}
-                              finishDate={resolvedFinishDate}
-                              isMobile={isMobile}
-                              colorVariant={colorVariant}
-                              variant={variant}
-                            />
+                                <CarerreItemTimeline
+                                  startDate={resolvedStartDate}
+                                  finishDate={resolvedFinishDate}
+                                  isMobile={isMobile}
+                                  colorVariant={colorVariant}
+                                  variant={variant}
+                                />
+                              </>
+                            )}
                           </>
                         ) : (
                           <>
@@ -117,12 +142,7 @@ const CarerreTimeline = ({
                               primaryColorVarint={primaryColorVariant}
                             />
 
-                            <React.Suspense
-                              fallback={
-                                <p className="flex justify-center items-center w-full h-full">
-                                  loading ...
-                                </p>
-                              }>
+                            <React.Suspense>
                               <CarerreDescription
                                 headingComponent={headingComponent}
                                 description={description}
@@ -132,6 +152,37 @@ const CarerreTimeline = ({
                           </>
                         )}
                       </section>
+
+                      {isMobile && (
+                        <React.Suspense>
+                          <LazyButton
+                            onClick={() =>
+                              setRenderDetailsArray((prevArray) => {
+                                const resolvedPrevArray = [...prevArray];
+                                resolvedPrevArray[index] =
+                                  !resolvedPrevArray[index];
+
+                                return resolvedPrevArray;
+                              })
+                            }
+                            uppercase
+                            className="mb-2"
+                            variant={BUTTON_VARIANTS.FILLED}
+                            size={BUTTON_SIZES.SMALL}
+                            endIcon={
+                              shouldRenderDetails ? (
+                                <ButtonAcitveIcon />
+                              ) : (
+                                <ButtonIcon />
+                              )
+                            }
+                            colorVariant={COLOR_VARIANT.PRIMARY}>
+                            {shouldRenderDetails
+                              ? "return to timeline"
+                              : "show more details"}
+                          </LazyButton>
+                        </React.Suspense>
+                      )}
                     </li>
 
                     {!isLastElement && (
