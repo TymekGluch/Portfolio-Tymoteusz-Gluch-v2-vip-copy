@@ -28,15 +28,15 @@ const CarerreDescription = ({
   return (
     <div className="w-full h-full px-3 pl-6 col-span-6 xl:col-span-7">
       <div className="flex flex-col gap-5 justify-between">
-        <section className="flex flex-col gap-1 w-full">
+        <section className="flex items-center lg:items-start flex-col gap-1 w-full">
           <JobDescriptionHeading className="uppercase">
             Job description:
           </JobDescriptionHeading>
 
-          <p className="text-sm">{description}</p>
+          <p className="text-sm text-center lg:text-start">{description}</p>
         </section>
 
-        <ul className="flex flex-wrap gap-1">
+        <ul className="flex justify-center lg:justify-start flex-wrap gap-1">
           {technologiesStack.map((TechnologiesItem) => (
             <Badge
               key={TechnologiesItem}
