@@ -95,6 +95,7 @@ const CarerreTimeline = ({
                             {shouldRenderDetails ? (
                               <React.Suspense>
                                 <CarerreDescription
+                                  title={title}
                                   headingComponent={headingComponent}
                                   description={description}
                                   technologiesStack={technologiesStack}

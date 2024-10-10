@@ -13,10 +13,12 @@ type CarerreDescriptionProps = {
   technologiesStack: string[];
   description: string;
   headingComponent: ValueOf<typeof ALLOWED_HEADING_TAGS>;
+  title?: string;
 };
 
 const CarerreDescription = ({
   technologiesStack,
+  title,
   description,
   headingComponent,
 }: CarerreDescriptionProps) => {
@@ -29,8 +31,8 @@ const CarerreDescription = ({
     <div className="w-full h-full px-3 pl-6 col-span-6 xl:col-span-7">
       <div className="flex flex-col gap-5 justify-between">
         <section className="flex items-center lg:items-start flex-col gap-1 w-full">
-          <JobDescriptionHeading className="uppercase">
-            Job description:
+          <JobDescriptionHeading className="text-center lg:text-start uppercase">
+            {title ? title : "Job Description"}
           </JobDescriptionHeading>
 
           <p className="text-sm text-center lg:text-start">{description}</p>
