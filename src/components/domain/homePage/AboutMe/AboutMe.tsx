@@ -41,14 +41,14 @@ const AboutMe = ({ colorVariant = COLOR_VARIANT.DEFAULT }: AboutMeProps) => {
         <>
           <img
             className={twMerge(
-              "min-w-48 h-48 object-cover rounded-full border-4 border-dashed",
+              "w-48 h-48 object-cover rounded-full border-4 border-dashed",
               BORDER_COLORS_CLASSES?.[colorVariant]
             )}
             loading="eager"
             src={avatarSorce}
             alt={avatarAlt}
-            width={1000}
-            height={1000}
+            width={1008}
+            height={1018}
           />
 
           <p className="lg:min-w-[calc(100%_-_54rem)] text-center sm:text-start">
