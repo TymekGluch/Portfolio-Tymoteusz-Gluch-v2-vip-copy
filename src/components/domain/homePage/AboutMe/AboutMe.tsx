@@ -47,6 +47,8 @@ const AboutMe = ({ colorVariant = COLOR_VARIANT.DEFAULT }: AboutMeProps) => {
             loading="eager"
             src={avatarSorce}
             alt={avatarAlt}
+            width={1000}
+            height={1000}
           />
 
           <p className="lg:min-w-[calc(100%_-_54rem)] text-center sm:text-start">
