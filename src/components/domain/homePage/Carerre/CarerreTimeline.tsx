@@ -20,6 +20,7 @@ import {
 } from "../../../Button/Button.constants";
 import ButtonIcon from "../../../../assets/icons/info.svg?react";
 import ButtonAcitveIcon from "../../../../assets/icons/return.svg?react";
+import { CarerreDescriptionSkeleton } from "./components/CarerreDescriptionSkeleton";
 
 type CarerreTimelineProps = {
   headingComponent?: ValueOf<typeof ALLOWED_HEADING_TAGS>;
@@ -93,7 +94,12 @@ const CarerreTimeline = ({
                         {isMobile ? (
                           <>
                             {shouldRenderDetails ? (
-                              <React.Suspense>
+                              <React.Suspense
+                                fallback={
+                                  <CarerreDescriptionSkeleton
+                                    colorVariant={colorVariant}
+                                  />
+                                }>
                                 <CarerreDescription
                                   title={title}
                                   headingComponent={headingComponent}
